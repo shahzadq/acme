@@ -18,13 +18,14 @@
     "lint:fix": "turbo lint --continue -- --fix --cache --cache-location node_modules/.cache/.eslintcache",
     "lint:ws": "pnpm dlx sherif@latest",
     "postinstall": "pnpm lint:ws",
-    "typecheck": "turbo typecheck",
-    "ui-add": "pnpm -F ui ui-add"
+    "typecheck": "turbo typecheck"
   },
   "devDependencies": {
-    "@workspace/prettier-config": "workspace:*",
     "@turbo/gen": "^1.13.3",
+    "@workspace/prettier-config": "workspace:*",
+    "dotenv-cli": "^7.4.1",
     "prettier": "^3.2.5",
+    "shx": "^0.3.4",
     "turbo": "^1.13.3",
     "typescript": "^5.4.5"
   },

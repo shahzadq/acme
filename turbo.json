@@ -40,6 +40,5 @@
       "cache": false
     }
   },
-  "globalEnv": [
-  ]
+  "globalEnv": ["DB_TODOS_URL"]
 }
