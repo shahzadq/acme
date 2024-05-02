@@ -8,14 +8,14 @@
   "eslint.experimental.useFlatConfig": true,
   "eslint.workingDirectories": [
     { "pattern": "apps/*/" },
-    { "pattern": "packages/*/" },
-    { "pattern": "tooling/*/" }
+    { "pattern": "libs/*/" },
+    { "pattern": "configs/*/" }
   ],
   "tailwindCSS.experimental.classRegex": [
     ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
-    ["cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
+    ["cn\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
   ],
-  "tailwindCSS.experimental.configFile": "./tooling/tailwind/web.ts",
+  "tailwindCSS.experimental.configFile": "./configs/tailwind/web.ts",
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "typescript.preferences.autoImportFileExcludePatterns": [
     "next/router.d.ts",
