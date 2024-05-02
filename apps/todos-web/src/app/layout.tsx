@@ -5,6 +5,10 @@ import "@/app/globals.css";
 import { ThemeProvider } from "@workspace/web-ui/providers/theme";
 import { cn } from "@workspace/web-ui/utils/cn";
 
+import { Footer } from "@/components/Footer";
+import { Header } from "@/components/Header";
+import { ListMenu } from "@/components/ListMenu";
+
 const sans = Inter({
   weight: ["400", "500", "600", "700", "800"],
   subsets: ["latin"],
@@ -17,11 +21,16 @@ export default function RootLayout(props: { children: React.ReactNode }) {
       <body
         className={cn(
           sans.variable,
-          "min-h-screen bg-background font-sans text-foreground antialiased",
+          "flex min-h-screen flex-col bg-background font-sans text-foreground antialiased",
         )}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          {props.children}
+          <Header />
+          <main className="flex w-full flex-grow flex-row">
+            <ListMenu />
+            <div className="w-full px-5 py-4">{props.children}</div>
+          </main>
+          <Footer />
         </ThemeProvider>
       </body>
     </html>

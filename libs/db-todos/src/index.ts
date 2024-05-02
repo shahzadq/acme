@@ -7,4 +7,4 @@ import * as schema from "./schema";
 const client = postgres(env.DB_TODOS_URL);
 
 export const db = drizzle(client, { schema });
-export { schema };
+export type { Todo, List } from "./schema";
