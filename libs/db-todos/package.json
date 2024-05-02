@@ -1,5 +1,5 @@
 {
-  "name": "@workspace/{{ name }}",
+  "name": "@workspace/db-todos",
   "private": true,
   "version": "0.1.0",
   "type": "module",
@@ -22,6 +22,8 @@
   },
   "prettier": "@workspace/prettier-config",
   "eslintConfig": {
-    "extends": ["@workspace/eslint-config"]
+    "extends": [
+      "@workspace/eslint-config"
+    ]
   }
 }
