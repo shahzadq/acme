@@ -1,0 +1,47 @@
+{
+  "name": "@workspace/todos-web",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "pnpm with-env next build",
+    "clean": "git clean -xdf .next .turbo node_modules",
+    "dev": "pnpm with-env next dev",
+    "format": "prettier --check . --ignore-path ../../.gitignore",
+    "lint": "eslint",
+    "start": "pnpm with-env next start",
+    "typecheck": "tsc --noEmit",
+    "with-env": "dotenv -e ../../.env --"
+  },
+  "dependencies": {
+    "@workspace/db-todos": "workspace:*",
+    "next": "^14.2.3",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.7",
+    "@types/react": "^18.3.1",
+    "@types/react-dom": "^18.3.0",
+    "@workspace/eslint-config": "workspace:*",
+    "@workspace/prettier-config": "workspace:*",
+    "@workspace/tailwind-config": "workspace:*",
+    "@workspace/tsconfig": "workspace:*",
+    "eslint": "^9.0.0",
+    "prettier": "^3.2.5",
+    "tailwindcss": "^3.4.3",
+    "typescript": "^5.4.5"
+  },
+  "prettier": "@workspace/prettier-config",
+  "eslintConfig": {
+    "extends": [
+      "@workspace/eslint-config/base",
+      "@workspace/eslint-config/react",
+      "@workspace/eslint-config/nextjs"
+    ],
+    "ignorePatterns": [
+      ".next/**"
+    ],
+    "root": true
+  }
+}
