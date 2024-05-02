@@ -9,20 +9,20 @@ import {
   varchar,
 } from "drizzle-orm/pg-core";
 
-export const listSchema = pgTable("lists", {
+export const listTable = pgTable("lists", {
   id: serial("id").primaryKey(),
-  name: varchar("name", { length: 50 }).notNull().unique(),
+  name: varchar("name", { length: 50 }).notNull(),
   isCustom: boolean("is_custom").default(true),
   createdAt: timestamp("created_at").defaultNow(),
 });
 
-export const listSchemaRelations = relations(listSchema, ({ many }) => ({
-  todos: many(todoSchema),
+export const listTableRelations = relations(listTable, ({ many }) => ({
+  todos: many(todoTable),
 }));
 
-export type List = InferSelectModel<typeof listSchema>;
+export type List = InferSelectModel<typeof listTable>;
 
-export const todoSchema = pgTable(
+export const todoTable = pgTable(
   "todos",
   {
     id: serial("id").primaryKey(),
@@ -35,11 +35,11 @@ export const todoSchema = pgTable(
   }),
 );
 
-export const todoSchemaRelations = relations(todoSchema, ({ one }) => ({
-  list: one(listSchema, {
-    fields: [todoSchema.listId],
-    references: [listSchema.id],
+export const todoTableRelations = relations(todoTable, ({ one }) => ({
+  list: one(listTable, {
+    fields: [todoTable.listId],
+    references: [listTable.id],
   }),
 }));
 
-export type Todo = InferSelectModel<typeof todoSchema>;
+export type Todo = InferSelectModel<typeof todoTable>;

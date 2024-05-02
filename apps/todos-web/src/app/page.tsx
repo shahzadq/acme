@@ -3,7 +3,7 @@ import { db } from "@workspace/db-todos";
 import { Todos } from "@/components/Todos";
 
 export default async function HomePage() {
-  const list = await db.query.listSchema.findFirst({
+  const list = await db.query.listTable.findFirst({
     where: (list, { eq }) => eq(list.isCustom, false),
     with: {
       todos: true,

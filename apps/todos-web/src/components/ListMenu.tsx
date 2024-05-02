@@ -8,6 +8,7 @@ import {
 } from "@workspace/web-ui/components/Icons";
 
 import { ActiveLink } from "./ActiveLink";
+import { CreateNewList } from "./CreateNewList";
 
 const ListLink = ({
   icon: Icon,
@@ -46,7 +47,7 @@ const ListCategory = ({
 );
 
 export const ListMenu = async () => {
-  const lists = await db.query.listSchema.findMany({
+  const lists = await db.query.listTable.findMany({
     where: (list, { eq }) => eq(list.isCustom, true),
   });
 
@@ -74,9 +75,7 @@ export const ListMenu = async () => {
           )}
         </ListCategory>
       </div>
-      <Button variant="outline">
-        <PlusIcon className="aspect-square w-5" />
-      </Button>
+      <CreateNewList />
     </div>
   );
 };

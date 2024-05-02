@@ -6,7 +6,8 @@
   "exports": {
     "./*": [
       "./src/*.tsx",
-      "./src/*.ts"
+      "./src/*.ts",
+      "./src/*/index.ts"
     ]
   },
   "scripts": {
@@ -16,6 +17,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@radix-ui/react-dialog": "^1.0.5",
     "@radix-ui/react-dropdown-menu": "^2.0.6",
     "@radix-ui/react-slot": "^1.0.2",
     "class-variance-authority": "^0.7.0",
