@@ -1,4 +1,4 @@
-import { InferSelectModel, relations } from "drizzle-orm";
+import { InferInsertModel, InferSelectModel, relations } from "drizzle-orm";
 import {
   boolean,
   index,
@@ -13,7 +13,7 @@ export const listTable = pgTable("lists", {
   id: serial("id").primaryKey(),
   name: varchar("name", { length: 50 }).notNull(),
   isCustom: boolean("is_custom").default(true),
-  createdAt: timestamp("created_at").defaultNow(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
 export const listTableRelations = relations(listTable, ({ many }) => ({
@@ -21,6 +21,7 @@ export const listTableRelations = relations(listTable, ({ many }) => ({
 }));
 
 export type List = InferSelectModel<typeof listTable>;
+export type InsertList = InferInsertModel<typeof listTable>;
 
 export const todoTable = pgTable(
   "todos",
@@ -28,7 +29,7 @@ export const todoTable = pgTable(
     id: serial("id").primaryKey(),
     description: varchar("description", { length: 256 }).notNull(),
     listId: integer("list_id").notNull(),
-    createdAt: timestamp("created_at").defaultNow(),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
   },
   (list) => ({
     ilstIdIdx: index("list_id_idx").on(list.listId),
@@ -43,3 +44,4 @@ export const todoTableRelations = relations(todoTable, ({ one }) => ({
 }));
 
 export type Todo = InferSelectModel<typeof todoTable>;
+export type InsertTodo = InferInsertModel<typeof todoTable>;

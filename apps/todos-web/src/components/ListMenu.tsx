@@ -1,12 +1,16 @@
-import { db } from "@workspace/db-todos";
-import { Button } from "@workspace/web-ui/components/Button";
+"use client";
+
+import { useMemo } from "react";
+
+import { reservedListNames } from "@workspace/db-todos/constants";
 import {
   CircleSlashIcon,
   ListIcon,
   LucideIcon,
-  PlusIcon,
 } from "@workspace/web-ui/components/Icons";
 
+import { useTodosStore } from "@/stores/todos";
+import { arrayIncludes } from "@/utils/arrays";
 import { ActiveLink } from "./ActiveLink";
 import { CreateNewList } from "./CreateNewList";
 
@@ -46,10 +50,16 @@ const ListCategory = ({
   </div>
 );
 
-export const ListMenu = async () => {
-  const lists = await db.query.listTable.findMany({
-    where: (list, { eq }) => eq(list.isCustom, true),
-  });
+export const ListMenu = () => {
+  const lists = useTodosStore((state) => state.todos);
+
+  const filteredLists = useMemo(
+    () =>
+      lists.filter(
+        (list) => !arrayIncludes(reservedListNames, list.name.toLowerCase()),
+      ),
+    [lists],
+  );
 
   return (
     <div className="flex w-96 flex-col justify-between border-r border-border px-5 py-4">
@@ -58,19 +68,19 @@ export const ListMenu = async () => {
           Unlisted
         </ListLink>
         <ListCategory name="Your Lists" icon={ListIcon}>
-          {lists.length > 0 ? (
-            lists.map((list) => (
+          {filteredLists.length > 0 ? (
+            filteredLists.map(({ id, name }) => (
               <ListLink
-                key={list.id}
-                href={encodeURIComponent(`/${list.name}`.toLowerCase())}
+                key={id}
+                href={encodeURIComponent(`/${name}`.toLowerCase())}
               >
-                {list.name}
+                {name}
               </ListLink>
             ))
           ) : (
             <div className="w-full overflow-hidden text-sm text-foreground/25">
-              You've not created any custom lists. Start by pressing the '+'
-              button below.
+              You've not created any custom lists. Create a new list by pressing
+              the '+' button below.
             </div>
           )}
         </ListCategory>
