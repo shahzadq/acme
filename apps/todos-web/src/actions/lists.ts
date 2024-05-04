@@ -1,6 +1,6 @@
 "use server";
 
-import type { InsertList } from "@workspace/db-todos/tables";
+import type { InsertList } from "@workspace/db-todos/types";
 
 import { db } from "@workspace/db-todos";
 import { listTable } from "@workspace/db-todos/tables";

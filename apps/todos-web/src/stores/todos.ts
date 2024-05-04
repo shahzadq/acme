@@ -1,4 +1,4 @@
-import type { List, Todo } from "@workspace/db-todos/tables";
+import type { List, Todo } from "@workspace/db-todos/types";
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 

@@ -1,6 +1,6 @@
 "use server";
 
-import type { InsertTodo } from "@workspace/db-todos/tables";
+import type { InsertTodo } from "@workspace/db-todos/types";
 
 import { db } from "@workspace/db-todos";
 import { todoTable } from "@workspace/db-todos/tables";

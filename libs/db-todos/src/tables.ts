@@ -1,4 +1,3 @@
-import type { InferInsertModel, InferSelectModel } from "drizzle-orm";
 import { relations } from "drizzle-orm";
 import {
   boolean,
@@ -20,9 +19,6 @@ export const listTableRelations = relations(listTable, ({ many }) => ({
   todos: many(todoTable),
 }));
 
-export type List = InferSelectModel<typeof listTable>;
-export type InsertList = InferInsertModel<typeof listTable>;
-
 export const todoTable = pgTable(
   "todos",
   {
@@ -43,6 +39,3 @@ export const todoTableRelations = relations(todoTable, ({ one }) => ({
     references: [listTable.id],
   }),
 }));
-
-export type Todo = InferSelectModel<typeof todoTable>;
-export type InsertTodo = InferInsertModel<typeof todoTable>;
