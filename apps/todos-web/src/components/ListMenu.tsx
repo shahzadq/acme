@@ -2,15 +2,14 @@
 
 import { useMemo } from "react";
 
-import { reservedListNames } from "@workspace/db-todos/constants";
 import {
   CircleSlashIcon,
   ListIcon,
+  ListTodoIcon,
   LucideIcon,
 } from "@workspace/web-ui/components/Icons";
 
-import { useTodosStore } from "@/stores/todos";
-import { arrayIncludes } from "@/utils/arrays";
+import { useTodosStore } from "@/hooks/useTodosStore";
 import { ActiveLink } from "./ActiveLink";
 import { CreateNewList } from "./CreateNewList";
 
@@ -51,25 +50,25 @@ const ListCategory = ({
 );
 
 export const ListMenu = () => {
-  const lists = useTodosStore((state) => state.todos);
+  const lists = useTodosStore();
 
-  const filteredLists = useMemo(
-    () =>
-      lists.filter(
-        (list) => !arrayIncludes(reservedListNames, list.name.toLowerCase()),
-      ),
+  const customLists = useMemo(
+    () => lists.filter((list) => list.isCustom),
     [lists],
   );
 
   return (
     <div className="flex w-96 flex-col justify-between border-r border-border px-5 py-4">
       <div className="flex flex-col gap-y-1">
-        <ListLink href="/" icon={CircleSlashIcon}>
+        <ListLink href="/" icon={ListTodoIcon}>
+          All
+        </ListLink>
+        <ListLink href="/unlisted" icon={CircleSlashIcon}>
           Unlisted
         </ListLink>
         <ListCategory name="Your Lists" icon={ListIcon}>
-          {filteredLists.length > 0 ? (
-            filteredLists.map(({ id, name }) => (
+          {customLists.length > 0 ? (
+            customLists.map(({ id, name }) => (
               <ListLink
                 key={id}
                 href={encodeURIComponent(`/${name}`.toLowerCase())}

@@ -9,7 +9,7 @@ import { cn } from "@workspace/web-ui/utils/cn";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { ListMenu } from "@/components/ListMenu";
-import { WithTodosStore } from "@/components/withTodosStore";
+import { TodosStoreProvider } from "@/components/TodosStoreProvider";
 
 const sans = Inter({
   weight: ["400", "500", "600", "700", "800"],
@@ -32,12 +32,12 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <Header />
-          <WithTodosStore todos={todos}>
+          <TodosStoreProvider todos={todos}>
             <main className="flex w-full flex-grow flex-row">
               <ListMenu />
               <div className="w-full px-5 py-4">{props.children}</div>
             </main>
-          </WithTodosStore>
+          </TodosStoreProvider>
           <Footer />
         </ThemeProvider>
       </body>

@@ -6,7 +6,7 @@ import { List, Todo } from "@workspace/db-todos/schema";
 
 import { setTodos } from "@/stores/todos";
 
-export const WithTodosStore = ({
+export const TodosStoreProvider = ({
   todos,
   children,
 }: {

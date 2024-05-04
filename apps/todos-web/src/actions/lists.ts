@@ -19,6 +19,17 @@ export const createList = createAction(async (params: InsertList) => {
     };
 
   try {
+    const currentLists = await db.query.listTable.findMany();
+    const currentListsNames = currentLists.map((list) =>
+      list.name.toLowerCase(),
+    );
+
+    if (arrayIncludes(currentListsNames, params.name.toLowerCase()))
+      return {
+        type: "Error",
+        message: CREATE_LIST_MESSAGES.LIST_EXISTS,
+      };
+
     await db.insert(listTable).values(params);
     const content = await db.query.listTable.findFirst({
       where: (list, { eq }) => eq(list.name, params.name),
