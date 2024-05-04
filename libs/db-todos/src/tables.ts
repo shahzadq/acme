@@ -10,8 +10,6 @@ import {
   varchar,
 } from "drizzle-orm/pg-core";
 
-const i = "";
-
 export const listTable = pgTable("lists", {
   id: serial("id").primaryKey(),
   name: varchar("name", { length: 50 }).notNull(),
