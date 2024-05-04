@@ -1,7 +1,9 @@
 "use server";
 
+import type { InsertList } from "@workspace/db-todos/tables";
+
 import { db } from "@workspace/db-todos";
-import { InsertList, listTable } from "@workspace/db-todos/tables";
+import { listTable } from "@workspace/db-todos/tables";
 
 import {
   CREATE_LIST_MESSAGES,

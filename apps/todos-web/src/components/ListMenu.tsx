@@ -1,10 +1,11 @@
 "use client";
 
+import type { LucideIcon } from "@workspace/web-ui/components/Icons";
+
 import {
   CircleSlashIcon,
   ListIcon,
   ListTodoIcon,
-  LucideIcon,
 } from "@workspace/web-ui/components/Icons";
 
 import { useTodosStoreListNames } from "@/hooks/useTodosStoreListNames";

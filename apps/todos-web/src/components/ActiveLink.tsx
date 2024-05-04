@@ -1,6 +1,7 @@
 "use client";
 
-import { ComponentProps, useMemo } from "react";
+import type { ComponentProps } from "react";
+import { useMemo } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 

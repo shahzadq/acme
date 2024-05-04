@@ -1,7 +1,9 @@
 "use server";
 
+import type { InsertTodo } from "@workspace/db-todos/tables";
+
 import { db } from "@workspace/db-todos";
-import { InsertTodo, todoTable } from "@workspace/db-todos/tables";
+import { todoTable } from "@workspace/db-todos/tables";
 
 import {
   CREATE_TODO_MESSAGES,

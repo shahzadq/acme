@@ -1,8 +1,8 @@
 "use client";
 
+import type { Todo } from "@workspace/db-todos/tables";
 import { z } from "zod";
 
-import { Todo } from "@workspace/db-todos/tables";
 import { Button } from "@workspace/web-ui/components/Button";
 import {
   Form,

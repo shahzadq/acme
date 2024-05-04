@@ -7,4 +7,4 @@ export const CREATE_TODO_MESSAGES = {
   SUCCESS: "Todo created successfully.",
 } as const;
 
-export const INTERNAL_SERVER_ERROR_MESSAGE = "Internal server error." as const;
+export const INTERNAL_SERVER_ERROR_MESSAGE = "Internal server error.";

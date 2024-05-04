@@ -1,11 +1,13 @@
+import type { List, Todo } from "@workspace/db-todos/tables";
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 
-import { List, Todo } from "@workspace/db-todos/tables";
-
 type StoreList = List & { todos: Todo[] };
 type StoreTodos = StoreList[];
-type Store = { unlisted: Todo[]; listed: StoreTodos };
+interface Store {
+  unlisted: Todo[];
+  listed: StoreTodos;
+}
 
 export const useTodosStore = create(
   immer<Store>(() => ({ unlisted: [], listed: [] })),

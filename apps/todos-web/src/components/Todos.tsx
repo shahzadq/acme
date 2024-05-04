@@ -1,4 +1,4 @@
-import { Todo as TodoType } from "@workspace/db-todos/tables";
+import type { Todo as TodoType } from "@workspace/db-todos/tables";
 
 const Todo = ({ description }: TodoType) => {
   return <div>{description}</div>;
