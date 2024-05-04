@@ -2,9 +2,9 @@ import { createContext, forwardRef, useId } from "react";
 
 import { cn } from "../../utils/cn";
 
-type FormItemContextValue = {
+interface FormItemContextValue {
   id: string;
-};
+}
 
 export const FormItemContext = createContext<FormItemContextValue>(
   {} as FormItemContextValue,
