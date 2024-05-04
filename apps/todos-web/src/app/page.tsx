@@ -1,24 +1,28 @@
-import { db } from "@workspace/db-todos";
+"use client";
+
+import { useMemo } from "react";
 
 import { Todos } from "@/components/Todos";
+import { useTodosStore } from "@/stores/todos";
 
-export default async function HomePage() {
-  const list = await db.query.listTable.findFirst({
-    where: (list, { eq }) => eq(list.isCustom, false),
-    with: {
-      todos: true,
-    },
-  });
+export default function HomePage() {
+  const todos = useTodosStore();
+
+  const extractedTodos = useMemo(
+    () => [
+      ...todos.listed
+        .map(({ todos }) => todos)
+        .reduce((a, v) => [...a, ...v], []),
+      ...todos.unlisted,
+    ],
+    [todos],
+  );
 
   return (
     <>
-      <h1>Unlisted Todo's</h1>
+      <h1>All Todo's</h1>
       <div>
-        {typeof list === "undefined" ? (
-          <div>Something went wrong when creating your account.</div>
-        ) : (
-          <Todos todos={list.todos} />
-        )}
+        <Todos todos={extractedTodos} />
       </div>
     </>
   );

@@ -1,9 +1,8 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { z } from "zod";
 
-import { reservedListNames } from "@workspace/db-todos/constants";
 import { Button } from "@workspace/web-ui/components/Button";
 import {
   Dialog,
@@ -29,26 +28,19 @@ import { Input } from "@workspace/web-ui/components/Input";
 
 import { createList } from "@/actions/lists";
 import { CREATE_LIST_MESSAGES } from "@/constants/actions";
-import { useTodosStore } from "@/hooks/useTodosStore";
+import { useTodosStoreListNames } from "@/hooks/useTodosStoreListNames";
 import { addList } from "@/stores/todos";
 import { arrayIncludes } from "@/utils/arrays";
 
 const CreateNewListForm = ({ closeDialog }: { closeDialog: () => void }) => {
-  const todos = useTodosStore();
-  const lists = useMemo(
-    () => todos.map(({ name }) => name.toLowerCase()),
-    [todos],
-  );
+  const listsNames = useTodosStoreListNames();
 
   const formSchema = z.object({
     name: z
       .string()
       .min(2)
       .max(50)
-      .refine((slug) => !arrayIncludes(reservedListNames, slug.toLowerCase()), {
-        message: CREATE_LIST_MESSAGES.RESERVED_NAME_PROVIDED,
-      })
-      .refine((slug) => !arrayIncludes(lists, slug.toLowerCase()), {
+      .refine((slug) => !arrayIncludes(listsNames, slug.toLowerCase()), {
         message: CREATE_LIST_MESSAGES.LIST_EXISTS,
       }),
   });
@@ -64,10 +56,7 @@ const CreateNewListForm = ({ closeDialog }: { closeDialog: () => void }) => {
     const result = await createList(values);
 
     if (result.type === "Error") {
-      if (
-        result.message === CREATE_LIST_MESSAGES.RESERVED_NAME_PROVIDED ||
-        result.message === CREATE_LIST_MESSAGES.LIST_EXISTS
-      ) {
+      if (result.message === CREATE_LIST_MESSAGES.LIST_EXISTS) {
         form.setError("name", { message: result.message });
       } else {
         form.setError("root", { message: result.message });

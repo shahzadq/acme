@@ -2,15 +2,15 @@
 
 import { useLayoutEffect } from "react";
 
-import { List, Todo } from "@workspace/db-todos/schema";
-
 import { setTodos } from "@/stores/todos";
 
-export const TodosStoreProvider = ({
+type TodosStore = Parameters<typeof setTodos>[0];
+
+export const TodosStoreClientProvider = ({
   todos,
   children,
 }: {
-  todos: (List & { todos: Todo[] })[];
+  todos: TodosStore;
   children: React.ReactNode;
 }) => {
   useLayoutEffect(() => {

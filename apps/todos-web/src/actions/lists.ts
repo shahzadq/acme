@@ -1,8 +1,7 @@
 "use server";
 
 import { db } from "@workspace/db-todos";
-import { reservedListNames } from "@workspace/db-todos/constants";
-import { InsertList, listTable } from "@workspace/db-todos/schema";
+import { InsertList, listTable } from "@workspace/db-todos/tables";
 
 import {
   CREATE_LIST_MESSAGES,
@@ -12,12 +11,6 @@ import { arrayIncludes } from "@/utils/arrays";
 import { createAction } from "./_internals";
 
 export const createList = createAction(async (params: InsertList) => {
-  if (arrayIncludes(reservedListNames, params.name.toLowerCase()))
-    return {
-      type: "Error",
-      message: CREATE_LIST_MESSAGES.RESERVED_NAME_PROVIDED,
-    };
-
   try {
     const currentLists = await db.query.listTable.findMany();
     const currentListsNames = currentLists.map((list) =>

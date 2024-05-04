@@ -1,16 +1,15 @@
-import { Todo } from "@workspace/db-todos";
+import { Todo as TodoType } from "@workspace/db-todos/tables";
 
-export const Todos = ({ todos }: { todos: Todo[] }) => {
-  if (todos.length === 0) return <div>Create your first todo</div>;
-
-  return (
-    <div>
-      <div>
-        {todos.map(({ id }) => (
-          <div key={id}></div>
-        ))}
-      </div>
-      <div>new todo form</div>
-    </div>
-  );
+const Todo = ({ description }: TodoType) => {
+  return <div>{description}</div>;
 };
+
+export const Todos = ({ todos }: { todos: TodoType[] }) => (
+  <div>
+    {todos.length === 0 ? (
+      <div>no todos</div>
+    ) : (
+      todos.map((todo) => <Todo key={todo.id} {...todo} />)
+    )}
+  </div>
+);

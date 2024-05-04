@@ -1,7 +1,5 @@
 "use client";
 
-import { useMemo } from "react";
-
 import {
   CircleSlashIcon,
   ListIcon,
@@ -9,7 +7,7 @@ import {
   LucideIcon,
 } from "@workspace/web-ui/components/Icons";
 
-import { useTodosStore } from "@/hooks/useTodosStore";
+import { useTodosStoreListNames } from "@/hooks/useTodosStoreListNames";
 import { ActiveLink } from "./ActiveLink";
 import { CreateNewList } from "./CreateNewList";
 
@@ -50,12 +48,7 @@ const ListCategory = ({
 );
 
 export const ListMenu = () => {
-  const lists = useTodosStore();
-
-  const customLists = useMemo(
-    () => lists.filter((list) => list.isCustom),
-    [lists],
-  );
+  const listsNames = useTodosStoreListNames();
 
   return (
     <div className="flex w-96 flex-col justify-between border-r border-border px-5 py-4">
@@ -67,12 +60,9 @@ export const ListMenu = () => {
           Unlisted
         </ListLink>
         <ListCategory name="Your Lists" icon={ListIcon}>
-          {customLists.length > 0 ? (
-            customLists.map(({ id, name }) => (
-              <ListLink
-                key={id}
-                href={encodeURIComponent(`/${name}`.toLowerCase())}
-              >
+          {listsNames.length > 0 ? (
+            listsNames.map((name, idx) => (
+              <ListLink key={idx} href={`/${name.toLowerCase()}`}>
                 {name}
               </ListLink>
             ))

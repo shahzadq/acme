@@ -12,7 +12,6 @@ import {
 export const listTable = pgTable("lists", {
   id: serial("id").primaryKey(),
   name: varchar("name", { length: 50 }).notNull(),
-  isCustom: boolean("is_custom").default(true),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
@@ -28,7 +27,8 @@ export const todoTable = pgTable(
   {
     id: serial("id").primaryKey(),
     description: varchar("description", { length: 256 }).notNull(),
-    listId: integer("list_id").notNull(),
+    completed: boolean("completed").default(false).notNull(),
+    listId: integer("list_id"),
     createdAt: timestamp("created_at").defaultNow().notNull(),
   },
   (list) => ({

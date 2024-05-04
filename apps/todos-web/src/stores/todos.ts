@@ -1,28 +1,34 @@
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 
-import { List, Todo } from "@workspace/db-todos/schema";
+import { List, Todo } from "@workspace/db-todos/tables";
 
 type StoreList = List & { todos: Todo[] };
 type StoreTodos = StoreList[];
-type Store = { todos: StoreTodos };
+type Store = { unlisted: Todo[]; listed: StoreTodos };
 
-export const todosStore = create(immer<Store>(() => ({ todos: [] })));
+export const useTodosStore = create(
+  immer<Store>(() => ({ unlisted: [], listed: [] })),
+);
 
-export const setTodos = (todos: StoreTodos) => todosStore.setState({ todos });
+export const setTodos = (todos: Store) => useTodosStore.setState(todos);
 
 export const addList = (list: List) =>
-  todosStore.setState((draft) => {
-    draft.todos = [...draft.todos, { ...list, todos: [] }];
+  useTodosStore.setState((draft) => {
+    draft.listed = [...draft.listed, { ...list, todos: [] }];
   });
 
-export const addTodo = ({ listName, ...todo }: Todo & { listName: string }) =>
-  todosStore.setState((draft) => {
-    const list = draft.todos.find(
-      (list) => list.name.toLowerCase() === listName.toLowerCase(),
-    );
+export const addTodo = ({ listName, ...todo }: Todo & { listName?: string }) =>
+  useTodosStore.setState((draft) => {
+    if (typeof listName === "undefined") {
+      draft.unlisted = [...draft.unlisted, todo];
+    } else {
+      const list = draft.listed.find(
+        ({ name }) => name.toLowerCase() === listName.toLowerCase(),
+      );
 
-    if (typeof list !== "undefined") {
-      list.todos = [...list.todos, todo];
+      if (typeof list !== "undefined") {
+        list.todos = [...list.todos, todo];
+      }
     }
   });
