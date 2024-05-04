@@ -1,4 +1,5 @@
-import { InferInsertModel, InferSelectModel, relations } from "drizzle-orm";
+import type { InferInsertModel, InferSelectModel } from "drizzle-orm";
+import { relations } from "drizzle-orm";
 import {
   boolean,
   index,
@@ -8,6 +9,8 @@ import {
   timestamp,
   varchar,
 } from "drizzle-orm/pg-core";
+
+const i = "";
 
 export const listTable = pgTable("lists", {
   id: serial("id").primaryKey(),
