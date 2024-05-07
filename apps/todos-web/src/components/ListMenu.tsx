@@ -8,7 +8,7 @@ import {
   ListTodoIcon,
 } from "@workspace/web-ui/components/Icons";
 
-import { useTodosStoreListNames } from "@/hooks/useTodosStoreListNames";
+import { useListsNames } from "@/hooks/useListsNames";
 import { ActiveLink } from "./ActiveLink";
 import { CreateNewList } from "./CreateNewList";
 
@@ -49,7 +49,7 @@ const ListCategory = ({
 );
 
 export const ListMenu = () => {
-  const listsNames = useTodosStoreListNames();
+  const listsNames = useListsNames();
 
   return (
     <div className="flex w-96 flex-col justify-between border-r border-border px-5 py-4">

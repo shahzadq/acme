@@ -30,3 +30,24 @@ export const createTodo = createAction(async (params: InsertTodo) => {
     return { type: "Error", message: INTERNAL_SERVER_ERROR_MESSAGE };
   }
 });
+
+export const fetchTodosByListId = createAction(
+  async (params: { listId?: number }) => {
+    try {
+      const todos = await db.query.todoTable.findMany({
+        where: (todo, { eq, isNull }) =>
+          typeof params.listId === "undefined"
+            ? isNull(todo.listId)
+            : eq(todo.listId, params.listId),
+      });
+
+      return {
+        type: "Success",
+        message: "Todos fetched successfully.",
+        content: todos,
+      };
+    } catch {
+      return { type: "Error", message: INTERNAL_SERVER_ERROR_MESSAGE };
+    }
+  },
+);

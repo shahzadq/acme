@@ -4,8 +4,8 @@ import { useMemo } from "react";
 
 import { useTodosStore } from "@/stores/todos";
 
-export const useTodosStoreListNames = () => {
-  const lists = useTodosStore((state) => state.listed);
+export const useListsNames = () => {
+  const lists = useTodosStore((state) => state.lists);
 
   const listsNames = useMemo(() => lists.map(({ name }) => name), [lists]);
 

@@ -1,21 +1,26 @@
 "use client";
 
-import { useLayoutEffect } from "react";
+import { useLayoutEffect, useState } from "react";
 
-import { setTodos } from "@/stores/todos";
+import { setTodosStore } from "@/stores/todos";
 
-type TodosStore = Parameters<typeof setTodos>[0];
+type StoreLists = Parameters<typeof setTodosStore>[0]["lists"];
 
 export const TodosStoreClientProvider = ({
-  todos,
+  lists,
   children,
 }: {
-  todos: TodosStore;
+  lists: StoreLists;
   children: React.ReactNode;
 }) => {
+  const [isLoading, setIsLoading] = useState(true);
+
   useLayoutEffect(() => {
-    setTodos(todos);
-  }, [todos]);
+    setTodosStore({ lists, unlisted: undefined });
+    setIsLoading(false);
+  }, [lists]);
+
+  if (isLoading) return <div>loading...</div>;
 
   return <>{children}</>;
 };

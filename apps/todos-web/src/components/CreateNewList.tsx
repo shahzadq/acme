@@ -28,12 +28,12 @@ import { Input } from "@workspace/web-ui/components/Input";
 
 import { createList } from "@/actions/lists";
 import { CREATE_LIST_MESSAGES } from "@/constants/actions";
-import { useTodosStoreListNames } from "@/hooks/useTodosStoreListNames";
-import { addList } from "@/stores/todos";
+import { useListsNames } from "@/hooks/useListsNames";
+import { addListToStore } from "@/stores/todos";
 import { arrayIncludes } from "@/utils/arrays";
 
 const CreateNewListForm = ({ closeDialog }: { closeDialog: () => void }) => {
-  const listsNames = useTodosStoreListNames();
+  const listsNames = useListsNames();
 
   const formSchema = z.object({
     name: z
@@ -62,7 +62,7 @@ const CreateNewListForm = ({ closeDialog }: { closeDialog: () => void }) => {
         form.setError("root", { message: result.message });
       }
     } else {
-      addList(result.content);
+      addListToStore(result.content);
       closeDialog();
     }
   });
