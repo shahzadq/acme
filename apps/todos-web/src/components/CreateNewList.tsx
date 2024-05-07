@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { z } from "zod";
 
+import { reservedListNames } from "@workspace/db-todos/constants";
 import { Button } from "@workspace/web-ui/components/Button";
 import {
   Dialog,
@@ -29,10 +30,10 @@ import { Input } from "@workspace/web-ui/components/Input";
 import { createList } from "@/actions/lists";
 import { CREATE_LIST_MESSAGES } from "@/constants/actions";
 import { useListsNames } from "@/hooks/useListsNames";
-import { addListToStore } from "@/stores/todos";
+import { addList } from "@/stores/todos";
 import { arrayIncludes } from "@/utils/arrays";
 
-const CreateNewListForm = ({ closeDialog }: { closeDialog: () => void }) => {
+const CreateNewListForm = ({ onSuccess }: { onSuccess: () => void }) => {
   const listsNames = useListsNames();
 
   const formSchema = z.object({
@@ -40,6 +41,9 @@ const CreateNewListForm = ({ closeDialog }: { closeDialog: () => void }) => {
       .string()
       .min(2)
       .max(50)
+      .refine((slug) => !arrayIncludes(reservedListNames, slug.toLowerCase()), {
+        message: CREATE_LIST_MESSAGES.RESERVED_NAME,
+      })
       .refine((slug) => !arrayIncludes(listsNames, slug.toLowerCase()), {
         message: CREATE_LIST_MESSAGES.LIST_EXISTS,
       }),
@@ -62,8 +66,8 @@ const CreateNewListForm = ({ closeDialog }: { closeDialog: () => void }) => {
         form.setError("root", { message: result.message });
       }
     } else {
-      addListToStore(result.content);
-      closeDialog();
+      addList(result.content);
+      onSuccess();
     }
   });
 
@@ -120,7 +124,7 @@ export const CreateNewList = () => {
             reserved).
           </DialogDescription>
         </DialogHeader>
-        <CreateNewListForm closeDialog={() => setIsOpen(false)} />
+        <CreateNewListForm onSuccess={() => setIsOpen(false)} />
       </DialogContent>
     </Dialog>
   );

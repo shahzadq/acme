@@ -7,10 +7,7 @@ export const TodosStoreProvider = async ({
 }: {
   children: React.ReactNode;
 }) => {
-  const lists = (await db.query.listTable.findMany()).map((list) => ({
-    ...list,
-    todos: undefined,
-  }));
+  const lists = await db.query.listTable.findMany();
 
   return (
     <TodosStoreClientProvider lists={lists}>

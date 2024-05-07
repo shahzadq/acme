@@ -3,6 +3,7 @@
 import type { InsertList } from "@workspace/db-todos/types";
 
 import { db } from "@workspace/db-todos";
+import { reservedListNames } from "@workspace/db-todos/constants";
 import { listTable } from "@workspace/db-todos/tables";
 
 import {
@@ -14,6 +15,9 @@ import { createAction } from "./_internals";
 
 export const createList = createAction(async (params: InsertList) => {
   try {
+    if (arrayIncludes(reservedListNames, params.name.toLowerCase()))
+      return { type: "Error", message: CREATE_LIST_MESSAGES.RESERVED_NAME };
+
     const currentLists = await db.query.listTable.findMany();
     const currentListsNames = currentLists.map((list) =>
       list.name.toLowerCase(),

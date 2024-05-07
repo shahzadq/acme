@@ -1,16 +1,14 @@
-import type { Todo as TodoType } from "@workspace/db-todos/types";
+import type { List, Todo as TodoType } from "@workspace/db-todos/types";
 
-const Todo = ({ description }: TodoType) => {
+interface TodoAndList extends TodoType {
+  list: List | null;
+}
+
+const Todo = ({ description }: TodoAndList) => {
   return <div>{description}</div>;
 };
 
-export interface TodosProps {
-  todos: TodoType[] | "loading" | "error";
-}
-
-export const Todos = ({ todos }: TodosProps) => {
-  if (todos === "loading") return <div>loading...</div>;
-  else if (todos === "error") return <div>something went wrong</div>;
+export const Todos = ({ todos }: { todos: TodoAndList[] }) => {
   return (
     <div>
       {todos.map((todo) => (

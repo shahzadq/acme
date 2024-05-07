@@ -1,5 +1,6 @@
 export const CREATE_LIST_MESSAGES = {
   LIST_EXISTS: "List names should be unique.",
+  RESERVED_NAME: "Name provided is reserved.",
   SUCCESS: "List created successfully.",
 } as const;
 

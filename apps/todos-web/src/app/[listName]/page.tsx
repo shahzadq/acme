@@ -1,47 +1,31 @@
-"use client";
-
-import { useEffect, useMemo, useState } from "react";
 import { notFound } from "next/navigation";
 
-import { fetchTodosByListId } from "@/actions/todos";
-import { Todos, TodosProps } from "@/components/Todos";
-import { addTodos, useTodosStore } from "@/stores/todos";
+import { db } from "@workspace/db-todos";
 
-export default function ListPage({ params }: { params: { listName: string } }) {
-  const { lists, unlisted } = useTodosStore();
+import { Todos } from "@/components/Todos";
 
-  const list = useMemo(() => {
-    if (params.listName.toLowerCase() === "unlisted") {
-      return { id: undefined, name: "Unlisted", todos: unlisted };
-    }
-    return lists.find(
-      ({ name }) => name.toUpperCase() === params.listName.toUpperCase(),
-    );
-  }, [lists, unlisted]);
+export default async function ListPage({
+  params,
+}: {
+  params: { listName: string };
+}) {
+  const list = await db.query.listTable.findFirst({
+    where: (list, { sql }) =>
+      sql`upper(${list.name}) = upper(${params.listName})`,
+    with: { todos: true },
+  });
 
   if (typeof list === "undefined") notFound();
 
-  const [todos, setTodos] = useState<TodosProps["todos"]>(
-    typeof list.todos === "undefined" ? "loading" : list.todos,
-  );
-
-  useEffect(() => {
-    const fetch = async () => {
-      const result = await fetchTodosByListId({ listId: list.id });
-      if (result.type === "Error") setTodos("error");
-      else {
-        setTodos(result.content);
-        addTodos(...result.content);
-      }
-    };
-
-    if (todos === "loading") fetch();
-  }, [todos]);
-
   return (
     <>
-      <h1>List Page</h1>
-      <Todos todos={todos} />
+      <h1>{list.name}</h1>
+      <Todos
+        todos={list.todos.map((todo) => ({
+          ...todo,
+          list: { id: list.id, createdAt: list.createdAt, name: list.name },
+        }))}
+      />
     </>
   );
 }
