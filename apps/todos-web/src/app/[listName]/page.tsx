@@ -18,14 +18,12 @@ export default async function ListPage({
   if (typeof list === "undefined") notFound();
 
   return (
-    <>
-      <h1>{list.name}</h1>
-      <Todos
-        todos={list.todos.map((todo) => ({
-          ...todo,
-          list: { id: list.id, createdAt: list.createdAt, name: list.name },
-        }))}
-      />
-    </>
+    <Todos
+      title={list.name}
+      todos={list.todos.map((todo) => ({
+        ...todo,
+        list: { id: list.id, createdAt: list.createdAt, name: list.name },
+      }))}
+    />
   );
 }

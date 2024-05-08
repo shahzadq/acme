@@ -10,10 +10,5 @@ export default async function UnlistedPage() {
     },
   });
 
-  return (
-    <>
-      <h1>Unlisted</h1>
-      <Todos todos={todos} />
-    </>
-  );
+  return <Todos title="Unlisted" todos={todos} />;
 }
