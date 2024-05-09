@@ -1,8 +1,8 @@
 "use server";
 
-import type { InsertTodo } from "@workspace/db-todos/types";
+import type { InsertTodo, Todo } from "@workspace/db-todos/types";
 
-import { db } from "@workspace/db-todos";
+import { db, eq } from "@workspace/db-todos";
 import { todoTable } from "@workspace/db-todos/tables";
 
 import {
@@ -16,6 +16,7 @@ export const createTodo = createAction(async (params: InsertTodo) => {
     await db.insert(todoTable).values(params);
     const todo = await db.query.todoTable.findFirst({
       where: (todo, { eq }) => eq(todo.description, params.description),
+      with: { list: true },
     });
 
     if (typeof todo === "undefined")
@@ -30,3 +31,17 @@ export const createTodo = createAction(async (params: InsertTodo) => {
     return { type: "Error", message: INTERNAL_SERVER_ERROR_MESSAGE };
   }
 });
+
+export const updateTodoCompleted = createAction(
+  async (params: Pick<Todo, "id" | "completed">) => {
+    try {
+      await db
+        .update(todoTable)
+        .set({ completed: params.completed })
+        .where(eq(todoTable.id, params.id));
+      return { type: "Success", message: "Todo updated successfully." };
+    } catch {
+      return { type: "Error", message: INTERNAL_SERVER_ERROR_MESSAGE };
+    }
+  },
+);

@@ -5,7 +5,6 @@ import "@/app/globals.css";
 import { ThemeProvider } from "@workspace/web-ui/providers/theme";
 import { cn } from "@workspace/web-ui/utils/cn";
 
-import { CreateNewTodoForm } from "@/components/CreateNewTodoForm";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { ListMenu } from "@/components/ListMenu";
@@ -32,10 +31,7 @@ export default function RootLayout(props: { children: React.ReactNode }) {
             <main className="flex w-full flex-grow flex-row">
               <ListMenu />
               <div className="flex w-full flex-col gap-y-4">
-                <div className="h-full px-5 pt-4">{props.children}</div>
-                <div className="border-t border-border px-5 py-4">
-                  <CreateNewTodoForm />
-                </div>
+                {props.children}
               </div>
             </main>
           </TodosStoreProvider>

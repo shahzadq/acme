@@ -7,3 +7,5 @@ import * as schema from "./tables";
 const client = postgres(env.DB_TODOS_URL);
 
 export const db = drizzle(client, { schema });
+
+export { eq } from "drizzle-orm";

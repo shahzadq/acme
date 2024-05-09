@@ -1,7 +1,7 @@
 "use client";
 
-import type { List, Todo as TodoType } from "@workspace/db-todos/types";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import type { TodoWithList } from "@workspace/db-todos/types";
+import { useCallback, useEffect, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 import {
@@ -11,93 +11,112 @@ import {
   TabsTrigger,
 } from "@workspace/web-ui/components/Tabs";
 
-interface TodoAndList extends TodoType {
-  list: List | null;
-}
+import { arrayIncludes } from "@/utils/arrays";
+import { mapKeys } from "@/utils/objects";
+import { CreateNewTodoForm } from "./CreateNewTodoForm";
+import { Todo } from "./Todo";
 
-const Todo = ({ description }: TodoAndList) => {
-  return <div>{description}</div>;
-};
-
-type Tab = "completed" | "not-completed";
 const searchParam = "t";
 
 export const Todos = ({
-  todos,
   title,
+  ...props
 }: {
-  todos: TodoAndList[];
+  todos: TodoWithList[];
   title: string;
 }) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
+  const [tabs, setTabs] = useState({
+    all: {
+      text: "All",
+      items: props.todos,
+    },
+    completed: {
+      text: "Completed",
+      items: props.todos.filter((todo) => todo.completed),
+    },
+    "not-completed": {
+      text: "Not Completed",
+      items: props.todos.filter((todo) => !todo.completed),
+    },
+  });
+
+  type Tab = keyof typeof tabs;
+
   const [tab, setTab] = useState<Tab>();
 
   useEffect(() => {
     const value = searchParams.get(searchParam);
 
-    if (value === "completed" || value === "not-completed") setTab(value);
-    else setTab("not-completed");
-  }, [searchParams]);
+    if (arrayIncludes(Object.keys(tabs), value)) setTab(value as Tab);
+    else setTab("all");
+  }, [searchParams, tabs]);
 
-  const createTabQueryString = useCallback(
+  const addSearchParam = useCallback(
     (value: Tab) => {
       const params = new URLSearchParams(searchParams.toString());
-      params.set(searchParam, value);
 
-      return params.toString();
+      if (value !== "all") params.set(searchParam, value);
+      else params.delete(searchParam);
+
+      router.push(`${pathname}?${params.toString()}`);
     },
-    [searchParams],
+    [pathname, searchParams, router],
   );
-
-  const { completed, notCompleted } = useMemo(() => {
-    const completed = [] as TodoAndList[];
-    const notCompleted = [] as TodoAndList[];
-
-    todos.forEach((todo) =>
-      todo.completed ? completed.push(todo) : notCompleted.push(todo),
-    );
-
-    return { completed, notCompleted };
-  }, [todos]);
 
   return (
     <>
-      <h1>{title}</h1>
-      <Tabs value={tab} onValueChange={(v) => setTab(v as Tab)}>
-        <TabsList>
-          <TabsTrigger
-            value="not-completed"
-            onClick={() => {
-              router.push(
-                `${pathname}?${createTabQueryString("not-completed")}`,
-              );
-            }}
-          >
-            Not Completed
-          </TabsTrigger>
-          <TabsTrigger
-            value="completed"
-            onClick={() => {
-              router.push(`${pathname}?${createTabQueryString("completed")}`);
-            }}
-          >
-            Completed
-          </TabsTrigger>
+      <Tabs
+        value={tab}
+        onValueChange={(v) => setTab(v as Tab)}
+        className="flex h-full flex-col gap-y-4 px-5 pt-4"
+      >
+        <h1 className="text-2xl">{title}</h1>
+        <TabsList className="justify-start">
+          {mapKeys(tabs, (tab, { text }) => (
+            <TabsTrigger value={tab} onClick={() => addSearchParam(tab)}>
+              {text}
+            </TabsTrigger>
+          ))}
         </TabsList>
-        <TabsContent value="not-completed">
-          {notCompleted.map((todo) => (
-            <Todo key={todo.id} {...todo} />
-          ))}
-        </TabsContent>
-        <TabsContent value="completed">
-          {completed.map((todo) => (
-            <Todo key={todo.id} {...todo} />
-          ))}
-        </TabsContent>
+        {mapKeys(tabs, (tab, { items }) => (
+          <TabsContent key={tab} value={tab}>
+            {items.map((todo) => (
+              <Todo
+                key={todo.id}
+                onCheckedChange={(v) => {
+                  setTabs((draft) => {
+                    const result = draft[tab].items.find(
+                      ({ id }) => id === todo.id,
+                    );
+                    if (typeof result !== "undefined") result.completed = v;
+                    return draft;
+                  });
+                }}
+                {...todo}
+              />
+            ))}
+          </TabsContent>
+        ))}
       </Tabs>
+      <div className="border-t border-border px-5 py-4">
+        <CreateNewTodoForm
+          onSuccess={(todo) => {
+            setTabs((draft) => {
+              draft.all.items = [...draft.all.items, todo];
+              draft["not-completed"].items = [
+                ...draft["not-completed"].items,
+                todo,
+              ];
+
+              return draft;
+            });
+          }}
+        />
+      </div>
     </>
   );
 };
