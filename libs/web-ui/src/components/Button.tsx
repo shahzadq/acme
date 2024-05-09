@@ -56,8 +56,8 @@ export const Button = forwardRef<
       {...props}
     >
       {isLoading && (
-        <div className="absolute left-0 top-0 h-full w-full bg-inherit">
-          <Spinner />
+        <div className="absolute left-0 top-0 flex h-full w-full items-center justify-center bg-inherit">
+          <Spinner className="size-4" />
         </div>
       )}
       {children}

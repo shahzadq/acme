@@ -20,6 +20,7 @@ export default async function ListPage({
   return (
     <Todos
       title={list.name}
+      listId={list.id}
       todos={list.todos.map((todo) => ({
         ...todo,
         list: { id: list.id, createdAt: list.createdAt, name: list.name },

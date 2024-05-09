@@ -113,7 +113,7 @@ export const CreateNewList = () => {
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         <Button variant="outline">
-          <PlusIcon className="aspect-square w-5" />
+          <PlusIcon className="size-5" />
         </Button>
       </DialogTrigger>
       <DialogContent>

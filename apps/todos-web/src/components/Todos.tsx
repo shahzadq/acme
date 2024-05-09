@@ -20,11 +20,12 @@ const searchParam = "t";
 
 export const Todos = ({
   title,
+  listId,
   ...props
 }: {
   todos: TodoWithList[];
   title: string;
-}) => {
+} & Pick<React.ComponentProps<typeof CreateNewTodoForm>, "listId">) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -104,6 +105,7 @@ export const Todos = ({
       </Tabs>
       <div className="border-t border-border px-5 py-4">
         <CreateNewTodoForm
+          listId={listId}
           onSuccess={(todo) => {
             setTabs((draft) => {
               draft.all.items = [...draft.all.items, todo];
