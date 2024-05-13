@@ -3,6 +3,9 @@ interface ActionReturn {
   message: string;
 }
 
-export const createAction = <R extends ActionReturn, A>(
-  fn: (...args: A[]) => Promise<R>,
+export const createAction = <
+  R extends ActionReturn,
+  F extends (...args: any[]) => Promise<R>,
+>(
+  fn: F,
 ) => fn;

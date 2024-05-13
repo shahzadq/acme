@@ -1,8 +1,15 @@
+import type { List } from "@workspace/db-todos/types";
 import { notFound } from "next/navigation";
 
 import { db } from "@workspace/db-todos";
 
 import { Todos } from "@/components/Todos";
+
+const extractList = <O extends List>({ id, createdAt, name }: O) => ({
+  id,
+  name,
+  createdAt,
+});
 
 export default async function ListPage({
   params,
@@ -23,7 +30,7 @@ export default async function ListPage({
       listId={list.id}
       todos={list.todos.map((todo) => ({
         ...todo,
-        list: { id: list.id, createdAt: list.createdAt, name: list.name },
+        list: extractList(list),
       }))}
     />
   );
