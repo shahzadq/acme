@@ -62,6 +62,7 @@ export const CreateNewTodoForm = ({
                 type="text"
                 placeholder="What do you want to get done?"
                 className="h-full"
+                disabled={isLoading}
                 {...field}
               />
             </FormItem>

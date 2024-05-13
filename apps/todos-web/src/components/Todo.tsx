@@ -6,11 +6,13 @@ import { useState } from "react";
 import { Checkbox } from "@workspace/web-ui/components/Checkbox";
 
 import { updateTodoCompleted } from "@/actions/todos";
+import { DotSeparator } from "./DotSeparator";
 
 export const Todo = ({
   description,
   list,
   id,
+  createdAt,
   onCheckedChange = () => {},
   ...props
 }: TodoWithList & { onCheckedChange?: (v: boolean) => void }) => {
@@ -33,8 +35,10 @@ export const Todo = ({
       />
       <div className="flex flex-col">
         <div className="text-lg font-semibold">{description}</div>
-        <div className="text-foreground/50">
-          {list !== null ? list.name : "Unlisted"}
+        <div className="flex flex-row items-center gap-x-2 text-foreground/50">
+          <span>{list !== null ? list.name : "Unlisted"}</span>
+          <DotSeparator />
+          <span>{createdAt.toDateString()}</span>
         </div>
       </div>
     </div>

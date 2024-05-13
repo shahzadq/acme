@@ -40,5 +40,5 @@
       "cache": false
     }
   },
-  "globalEnv": ["DB_TODOS_URL"]
+  "globalEnv": ["DB_TODOS_URL", "DB_AUTH_URL"]
 }
