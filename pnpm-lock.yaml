@@ -182,6 +182,27 @@ importers:
 
   configs/typescript: {}
 
+  libs/db-auth:
+    devDependencies:
+      '@workspace/eslint-config':
+        specifier: workspace:*
+        version: link:../../configs/eslint
+      '@workspace/prettier-config':
+        specifier: workspace:*
+        version: link:../../configs/prettier
+      '@workspace/tsconfig':
+        specifier: workspace:*
+        version: link:../../configs/typescript
+      eslint:
+        specifier: ^9.0.0
+        version: 9.0.0
+      prettier:
+        specifier: ^3.2.5
+        version: 3.2.5
+      typescript:
+        specifier: ^5.4.5
+        version: 5.4.5
+
   libs/db-todos:
     dependencies:
       '@t3-oss/env-core':
