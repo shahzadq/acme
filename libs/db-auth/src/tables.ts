@@ -9,10 +9,10 @@ import {
   varchar,
 } from "drizzle-orm/pg-core";
 
-import { createdAt, userId } from "./schemas";
+import { createdAt, id, userId } from "./schemas";
 
 export const usersTable = pgTable("users", {
-  id: userId("id").primaryKey(),
+  id: id().primaryKey(),
   name: varchar("name", { length: 255 }),
   email: varchar("email", { length: 255 }).notNull(),
   emailVerified: timestamp("email_verified", { mode: "date" }),
@@ -26,7 +26,6 @@ export const usersTableRelations = relations(usersTable, ({ many }) => ({
 export const accountsTable = pgTable(
   "accounts",
   {
-    userId: userId(),
     type: varchar("type", { length: 255 })
       .$type<"oauth" | "oidc" | "email" | "webauthn">()
       .notNull(),
@@ -41,6 +40,7 @@ export const accountsTable = pgTable(
     scope: varchar("scope", { length: 255 }),
     id_token: text("id_token"),
     session_state: varchar("session_state", { length: 255 }),
+    userId,
     createdAt,
   },
   (account) => ({
@@ -64,8 +64,8 @@ export const sessionsTable = pgTable(
     sessionToken: varchar("session_token", { length: 255 })
       .notNull()
       .primaryKey(),
-    userId: userId(),
     expires: timestamp("expires", { mode: "date" }).notNull(),
+    userId,
     createdAt,
   },
   (session) => ({
