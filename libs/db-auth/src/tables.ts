@@ -6,18 +6,27 @@ import {
   primaryKey,
   text,
   timestamp,
+  uniqueIndex,
   varchar,
 } from "drizzle-orm/pg-core";
 
-import { createdAt, id, userId } from "./schemas";
+import { createdAt, id } from "@workspace/drizzle";
 
-export const usersTable = pgTable("users", {
-  id: id().primaryKey(),
-  name: varchar("name", { length: 255 }),
-  email: varchar("email", { length: 255 }).notNull(),
-  emailVerified: timestamp("email_verified", { mode: "date" }),
-  createdAt,
-});
+import { userId } from "./schemas";
+
+export const usersTable = pgTable(
+  "users",
+  {
+    id: id().primaryKey(),
+    name: varchar("name", { length: 255 }),
+    email: varchar("email", { length: 255 }).notNull(),
+    emailVerified: timestamp("email_verified", { mode: "date" }),
+    createdAt,
+  },
+  (user) => ({
+    emailIdx: uniqueIndex("email_idx").on(user.email),
+  }),
+);
 
 export const usersTableRelations = relations(usersTable, ({ many }) => ({
   accounts: many(accountsTable),

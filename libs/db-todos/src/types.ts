@@ -1,40 +1,21 @@
-import type {
-  BuildQueryResult,
-  DBQueryConfig,
-  ExtractTablesWithRelations,
-  InferInsertModel,
-  InferSelectModel,
-} from "drizzle-orm";
+import type { InferResultType } from "@workspace/drizzle/types";
+import type { InferInsertModel, InferSelectModel } from "drizzle-orm";
 
-import type { listTable, todoTable } from "./tables";
 import type * as schema from "./tables";
 
-type Schema = typeof schema;
-type TSchema = ExtractTablesWithRelations<Schema>;
+export type List = InferSelectModel<typeof schema.listTable>;
+export type InsertList = InferInsertModel<typeof schema.listTable>;
 
-type IncludeRelation<TableName extends keyof TSchema> = DBQueryConfig<
-  "one" | "many",
-  boolean,
-  TSchema,
-  TSchema[TableName]
->["with"];
+export type Todo = InferSelectModel<typeof schema.todoTable>;
+export type InsertTodo = InferInsertModel<typeof schema.todoTable>;
 
-type InferResultType<
-  TableName extends keyof TSchema,
-  With extends IncludeRelation<TableName> | undefined = undefined,
-> = BuildQueryResult<
-  TSchema,
-  TSchema[TableName],
-  {
-    with: With;
-  }
+export type ListWithTodos = InferResultType<
+  typeof schema,
+  "listTable",
+  { todos: true }
 >;
-
-export type List = InferSelectModel<typeof listTable>;
-export type InsertList = InferInsertModel<typeof listTable>;
-
-export type Todo = InferSelectModel<typeof todoTable>;
-export type InsertTodo = InferInsertModel<typeof todoTable>;
-
-export type ListWithTodos = InferResultType<"listTable", { todos: true }>;
-export type TodoWithList = InferResultType<"todoTable", { list: true }>;
+export type TodoWithList = InferResultType<
+  typeof schema,
+  "todoTable",
+  { list: true }
+>;

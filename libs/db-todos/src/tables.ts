@@ -1,17 +1,21 @@
 import { relations } from "drizzle-orm";
-import {
-  boolean,
-  index,
-  pgTable,
-  timestamp,
-  varchar,
-} from "drizzle-orm/pg-core";
+import { boolean, index, pgTable, varchar } from "drizzle-orm/pg-core";
 
-export const listTable = pgTable("lists", {
-  id: varchar("id", { length: 255 }).notNull().primaryKey(),
-  name: varchar("name", { length: 50 }).notNull(),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-});
+import { userId } from "@workspace/db-auth/schemas";
+import { createdAt, id } from "@workspace/drizzle";
+
+export const listTable = pgTable(
+  "lists",
+  {
+    id: id().primaryKey(),
+    name: varchar("name", { length: 50 }).notNull(),
+    userId,
+    createdAt,
+  },
+  (list) => ({
+    userIdIdx: index("user_id_idx").on(list.userId),
+  }),
+);
 
 export const listTableRelations = relations(listTable, ({ many }) => ({
   todos: many(todoTable),
@@ -20,14 +24,16 @@ export const listTableRelations = relations(listTable, ({ many }) => ({
 export const todoTable = pgTable(
   "todos",
   {
-    id: varchar("id", { length: 255 }).notNull().primaryKey(),
+    id: id().primaryKey(),
     description: varchar("description", { length: 256 }).notNull(),
     completed: boolean("completed").default(false).notNull(),
-    listId: varchar("list_id", { length: 255 }).notNull(),
-    createdAt: timestamp("created_at").defaultNow().notNull(),
+    listId: id("list_id"),
+    userId,
+    createdAt,
   },
-  (list) => ({
-    ilstIdIdx: index("list_id_idx").on(list.listId),
+  (todo) => ({
+    userIdIdx: index("user_id_idx").on(todo.userId),
+    listIdIdx: index("list_id_idx").on(todo.listId),
   }),
 );
 

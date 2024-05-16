@@ -17,6 +17,7 @@
     "with-env": "dotenv -e ../../.env --"
   },
   "dependencies": {
+    "@workspace/drizzle": "workspace:*",
     "@t3-oss/env-core": "^0.10.1",
     "drizzle-orm": "^0.30.10",
     "postgres": "^3.4.4",
