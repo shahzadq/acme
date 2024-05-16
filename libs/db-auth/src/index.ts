@@ -1,1 +1,9 @@
-export const name = "db-auth";
+import { drizzle } from "drizzle-orm/postgres-js";
+import postgres from "postgres";
+
+import { env } from "../env";
+import * as schema from "./tables";
+
+const client = postgres(env.DB_AUTH_URL);
+
+export const db = drizzle(client, { schema });

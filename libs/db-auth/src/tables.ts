@@ -21,6 +21,7 @@ export const usersTable = pgTable(
     name: varchar("name", { length: 255 }),
     email: varchar("email", { length: 255 }).notNull(),
     emailVerified: timestamp("email_verified", { mode: "date" }),
+    image: varchar("image", { length: 255 }),
     createdAt,
   },
   (user) => ({
