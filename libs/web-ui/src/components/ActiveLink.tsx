@@ -5,7 +5,7 @@ import { useMemo } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { cn } from "@workspace/web-ui/utils/cn";
+import { cn } from "../utils/cn";
 
 export const ActiveLink = ({
   href,
