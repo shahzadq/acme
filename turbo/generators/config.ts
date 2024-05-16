@@ -2,11 +2,39 @@ import { execSync } from "node:child_process";
 import type { PlopTypes } from "@turbo/gen";
 
 const prefix = "@workspace/";
-const dir = "libs";
+
+const installAndFormat = (dir: string) => async (answers: object) => {
+  if ("name" in answers && typeof answers.name === "string") {
+    execSync("npx pnpm i", { stdio: "inherit" });
+    execSync(
+      `npx pnpm prettier --write ${dir}/${answers.name}/** --list-different`,
+    );
+
+    return "Package scaffolded";
+  }
+  return "Package not scaffolded";
+};
 
 export default function generator(plop: PlopTypes.NodePlopAPI): void {
-  plop.setGenerator("init", {
-    description: "Generate a new lib for the Acme Monorepo",
+  plop.setGenerator("generateNextApp", {
+    description: "Generate a new Next JS app",
+    prompts: [
+      { type: "input", name: "name", message: "What is the apps name?" },
+    ],
+    actions: [
+      {
+        type: "addMany",
+        destination: "apps/{{name}}",
+        templateFiles: "templates/app/next",
+        base: "templates/app/next",
+        stripExtensions: ["hbs"],
+      },
+      installAndFormat("apps"),
+    ],
+  });
+
+  plop.setGenerator("generateLib", {
+    description: "Generate a new lib",
     prompts: [
       {
         type: "input",
@@ -24,37 +52,13 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
         return "Config sanitized";
       },
       {
-        type: "add",
-        path: `${dir}/{{name}}/package.json`,
-        templateFile: "templates/package.json.hbs",
+        type: "addMany",
+        destination: "libs/{{name}}",
+        templateFiles: "templates/lib",
+        base: "templates/lib",
+        stripExtensions: ["hbs"],
       },
-      {
-        type: "add",
-        path: `${dir}/{{name}}/eslint.config.js`,
-        templateFile: "templates/eslint.config.js.hbs",
-      },
-      {
-        type: "add",
-        path: `${dir}/{{name}}/tsconfig.json`,
-        templateFile: "templates/tsconfig.json.hbs",
-      },
-      {
-        type: "add",
-        path: `${dir}/{{name}}/src/index.ts`,
-        template: "export const name = '{{ name }}';",
-      },
-      async (answers) => {
-        if ("name" in answers && typeof answers.name === "string") {
-          execSync("npx pnpm i", { stdio: "inherit" });
-          execSync(
-            `npx pnpm prettier --write ${dir}/${answers.name}/** --list-different`,
-          );
-
-          return "Package scaffolded";
-        }
-
-        return "Package not scaffolded";
-      },
+      installAndFormat("libs"),
     ],
   });
 }
