@@ -30,6 +30,61 @@ importers:
         specifier: ^5.4.5
         version: 5.4.5
 
+  apps/auth-web:
+    dependencies:
+      '@workspace/db-auth':
+        specifier: workspace:*
+        version: link:../../libs/db-auth
+      '@workspace/web-ui':
+        specifier: workspace:*
+        version: link:../../libs/web-ui
+      next:
+        specifier: ^14.2.3
+        version: 14.2.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      react-dom:
+        specifier: ^18.3.1
+        version: 18.3.1(react@18.3.1)
+      zod:
+        specifier: ^3.23.5
+        version: 3.23.5
+    devDependencies:
+      '@types/node':
+        specifier: ^20.12.7
+        version: 20.12.7
+      '@types/react':
+        specifier: ^18.3.1
+        version: 18.3.1
+      '@types/react-dom':
+        specifier: ^18.3.0
+        version: 18.3.0
+      '@workspace/eslint-config':
+        specifier: workspace:*
+        version: link:../../configs/eslint
+      '@workspace/prettier-config':
+        specifier: workspace:*
+        version: link:../../configs/prettier
+      '@workspace/tailwind-config':
+        specifier: workspace:*
+        version: link:../../configs/tailwind
+      '@workspace/tsconfig':
+        specifier: workspace:*
+        version: link:../../configs/typescript
+      eslint:
+        specifier: ^9.0.0
+        version: 9.0.0
+      prettier:
+        specifier: ^3.2.5
+        version: 3.2.5
+      tailwindcss:
+        specifier: ^3.4.3
+        version: 3.4.3(ts-node@10.9.2(@types/node@20.12.7)(typescript@5.4.5))
+      typescript:
+        specifier: ^5.4.5
+        version: 5.4.5
+
   apps/todos-web:
     dependencies:
       '@workspace/db-todos':

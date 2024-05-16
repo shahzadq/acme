@@ -1,5 +1,5 @@
 {
-  "name": "todos-web",
+  "name": "auth-web",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -14,14 +14,12 @@
     "with-env": "dotenv -e ../../.env --"
   },
   "dependencies": {
-    "@workspace/db-todos": "workspace:*",
+    "@workspace/db-auth": "workspace:*",
     "@workspace/web-ui": "workspace:*",
-    "immer": "^10.1.1",
     "next": "^14.2.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "zod": "^3.23.5",
-    "zustand": "^4.5.2"
+    "zod": "^3.23.5"
   },
   "devDependencies": {
     "@types/node": "^20.12.7",
