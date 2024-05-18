@@ -17,7 +17,7 @@ export const usersTable = pgTable(
   "users",
   {
     id: id().primaryKey(),
-    name: varchar("name", { length: 255 }),
+    name: varchar("name", { length: 50 }),
     email: varchar("email", { length: 255 }).notNull(),
     emailVerified: timestamp("email_verified", { mode: "date" }),
     image: varchar("image", { length: 255 }),

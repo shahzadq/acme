@@ -16,24 +16,21 @@ import { TriangleAlertIcon } from "@workspace/web-ui/components/Icons";
 import { Input } from "@workspace/web-ui/components/Input";
 import { cn } from "@workspace/web-ui/utils/cn";
 
-// import { signIn } from "@/actions/auth";
-
-export const SignInForm = () => {
+export const SignUpForm = () => {
   const form = useForm({
     resolver: zodResolver(
       z.object({
+        name: z.string().min(2).max(50),
         email: z.string().email(),
       }),
     ),
     defaultValues: {
+      name: "",
       email: "",
     },
   });
 
-  const handleFormSubmit = form.handleSubmit(async (values) => {
-    // const result = await signIn(values);
-    // console.log(result);
-  });
+  const handleFormSubmit = form.handleSubmit(async (values) => {});
 
   return (
     <Form {...form}>
@@ -41,6 +38,25 @@ export const SignInForm = () => {
         onSubmit={handleFormSubmit}
         className="flex w-full flex-col gap-y-6"
       >
+        <FormField
+          control={form.control}
+          name="name"
+          render={({ field, fieldState }) => (
+            <FormItem>
+              <FormControl>
+                <Input
+                  type="text"
+                  placeholder="Name"
+                  className={cn(
+                    fieldState.error &&
+                      "border-red-500 focus-visible:ring-red-500",
+                  )}
+                  {...field}
+                />
+              </FormControl>
+            </FormItem>
+          )}
+        />
         <FormField
           control={form.control}
           name="email"
@@ -60,10 +76,13 @@ export const SignInForm = () => {
             </FormItem>
           )}
         />
-        {(form.formState.errors.email ?? form.formState.errors.root) && (
+        {(form.formState.errors.email ??
+          form.formState.errors.name ??
+          form.formState.errors.root) && (
           <div className="flex flex-row items-center gap-x-2 text-sm text-red-500">
             <TriangleAlertIcon className="size-4" />
             {form.formState.errors.email?.message ??
+              form.formState.errors.name?.message ??
               form.formState.errors.root?.message}
           </div>
         )}
@@ -72,10 +91,10 @@ export const SignInForm = () => {
             Next
           </Button>
           <Link
-            href="/signup"
+            href="/signin"
             className="text-center text-sm font-medium text-blue-500"
           >
-            Create account
+            Sign In
           </Link>
         </div>
       </form>
