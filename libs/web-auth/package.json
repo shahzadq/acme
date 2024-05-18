@@ -12,23 +12,30 @@
   },
   "scripts": {
     "clean": "shx rm -rf .turbo node_modules",
+    "dev:email": "email dev --port 3002 --dir ./src/emails",
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "lint": "eslint",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@workspace/db-auth": "workspace:*",
     "@auth/drizzle-adapter": "^1.1.0",
+    "@react-email/components": "0.0.17",
     "@t3-oss/env-nextjs": "^0.10.1",
+    "@workspace/db-auth": "workspace:*",
     "next": "^14.2.3",
-    "next-auth": "5.0.0-beta.17",
+    "next-auth": "5.0.0-beta.18",
+    "nodemailer": "^6.9.13",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-email": "2.1.2",
     "zod": "^3.23.5"
   },
   "devDependencies": {
+    "@types/react": "^18.3.1",
+    "@types/nodemailer": "^6.4.15",
     "@workspace/eslint-config": "workspace:*",
     "@workspace/prettier-config": "workspace:*",
+    "@workspace/tailwind-config": "workspace:*",
     "@workspace/tsconfig": "workspace:*",
     "eslint": "^9.0.0",
     "prettier": "^3.2.5",

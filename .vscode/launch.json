@@ -8,6 +8,14 @@
       "command": "pnpm dev",
       "cwd": "${workspaceFolder}/apps/todos-web/",
       "skipFiles": ["<node_internals>/**"]
+    },
+    {
+      "name": "Auth Web",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "pnpm dev",
+      "cwd": "${workspaceFolder}/apps/auth-web/",
+      "skipFiles": ["<node_internals>/**"]
     }
   ]
 }

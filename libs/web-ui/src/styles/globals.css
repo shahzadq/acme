@@ -55,7 +55,7 @@
   }
   html {
     @apply scroll-smooth;
-    font-size: 14px;
+    /* font-size: 14px; */
   }
   body {
     font-synthesis-weight: none;

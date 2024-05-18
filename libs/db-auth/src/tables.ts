@@ -1,6 +1,5 @@
 import { relations } from "drizzle-orm";
 import {
-  index,
   integer,
   pgTable,
   primaryKey,
@@ -57,7 +56,6 @@ export const accountsTable = pgTable(
     compoundKey: primaryKey({
       columns: [account.provider, account.providerAccountId],
     }),
-    userIdIdx: index("user_id_idx").on(account.userId),
   }),
 );
 
@@ -68,20 +66,14 @@ export const accountsTableRelations = relations(accountsTable, ({ one }) => ({
   }),
 }));
 
-export const sessionsTable = pgTable(
-  "sessions",
-  {
-    sessionToken: varchar("session_token", { length: 255 })
-      .notNull()
-      .primaryKey(),
-    expires: timestamp("expires", { mode: "date" }).notNull(),
-    userId,
-    createdAt,
-  },
-  (session) => ({
-    userIdIdx: index("user_id_idx").on(session.userId),
-  }),
-);
+export const sessionsTable = pgTable("sessions", {
+  sessionToken: varchar("session_token", { length: 255 })
+    .notNull()
+    .primaryKey(),
+  expires: timestamp("expires", { mode: "date" }).notNull(),
+  userId,
+  createdAt,
+});
 
 export const sessionsTableRelations = relations(sessionsTable, ({ one }) => ({
   user: one(usersTable, {

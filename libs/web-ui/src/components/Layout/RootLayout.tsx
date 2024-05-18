@@ -17,10 +17,12 @@ export const RootLayout = ({
   children,
   classNames,
   themeProvider,
+  header,
 }: {
   children: React.ReactNode;
   classNames?: { body?: string; main?: string };
   themeProvider?: Omit<React.ComponentProps<typeof ThemeProvider>, "children">;
+  header?: React.ComponentProps<typeof Header>;
 }) => {
   return (
     <html lang="en" suppressHydrationWarning>
@@ -37,8 +39,10 @@ export const RootLayout = ({
           enableSystem
           {...themeProvider}
         >
-          <Header />
-          <main className={cn("flex w-full flex-grow", classNames?.main)}>
+          <Header {...header} />
+          <main
+            className={cn("flex w-full flex-grow flex-col", classNames?.main)}
+          >
             {children}
           </main>
           <Footer />
