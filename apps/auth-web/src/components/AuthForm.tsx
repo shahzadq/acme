@@ -114,14 +114,14 @@ export const AuthForm = <
         })}
         {errors.length > 0 && (
           <ul className="flex flex-col gap-y-2">
-            {errors.map(({ error, field }, i) => (
+            {errors.map(({ error }, i) => (
               <li
                 key={i}
                 className="flex flex-row items-center gap-x-2 text-sm text-red-500"
               >
                 <TriangleAlertIcon className="size-4" />
-                {typeof field !== "undefined" && <span>{field}:</span>}
-                <span className="font-bold">{error}</span>
+                {/* {typeof field !== "undefined" && <span>{field}:</span>} */}
+                <span>{error}</span>
               </li>
             ))}
           </ul>

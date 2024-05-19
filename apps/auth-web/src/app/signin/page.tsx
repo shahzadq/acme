@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 
+import { AuthFormHeading } from "@/components/AuthFormHeading";
+import { AuthFormLink } from "@/components/AuthFormLink";
 import { SignInForm } from "@/components/SignInForm";
 
 export const metadata: Metadata = {
@@ -9,13 +11,9 @@ export const metadata: Metadata = {
 export default function SignInPage() {
   return (
     <>
-      <div className="flex flex-col gap-y-2">
-        <h1 className="w-full text-2xl font-bold">Sign In</h1>
-        <p className="text-sm text-foreground/50">
-          We'll send you a link to sign in.
-        </p>
-      </div>
+      <AuthFormHeading title="Sign In" description="Let's get you signed in." />
       <SignInForm />
+      <AuthFormLink href="/signup">Create account</AuthFormLink>
     </>
   );
 }

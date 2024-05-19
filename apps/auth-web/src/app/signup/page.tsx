@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 
+import { AuthFormHeading } from "@/components/AuthFormHeading";
+import { AuthFormLink } from "@/components/AuthFormLink";
 import { SignUpForm } from "@/components/SignUpForm";
 
 export const metadata: Metadata = {
@@ -10,16 +11,12 @@ export const metadata: Metadata = {
 export default function SignUpPage() {
   return (
     <>
-      <div className="flex flex-col gap-y-2">
-        <h1 className="w-full text-2xl font-bold">Sign Up</h1>
-        <p className="text-sm text-foreground/50">
-          Hi there! We can't wait to get you up and running.
-        </p>
-      </div>
+      <AuthFormHeading
+        title="Sign Up"
+        description="Hi there! We can't wait to get you up and running."
+      />
       <SignUpForm />
-      <Link href="/signin" className="text-center text-sm text-blue-500">
-        Already have an account?
-      </Link>
+      <AuthFormLink href="/signin">Already have an account?</AuthFormLink>
     </>
   );
 }
