@@ -4,6 +4,7 @@ import { useState } from "react";
 import { z } from "zod";
 
 import { signUp } from "@/actions/auth";
+import { email } from "@/schemas/authForm";
 import { AuthForm } from "./AuthForm";
 import { EmailSent } from "./EmailSent";
 
@@ -24,9 +25,7 @@ export const SignUpForm = () => {
           .min(2, { message: "Name should be at least 2 characters long" })
           .max(50, { message: "Name can't exceed 50 characters" })
           .optional(),
-        email: z
-          .string({ message: "We need an email to continue" })
-          .email({ message: "That email doesn't look quite right" }),
+        email,
       })}
       inputs={{
         name: {

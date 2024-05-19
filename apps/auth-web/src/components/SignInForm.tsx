@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { z } from "zod";
 
+import { email } from "@/schemas/authForm";
 import { AuthForm } from "./AuthForm";
 import { EmailSent } from "./EmailSent";
 
@@ -15,9 +16,7 @@ export const SignInForm = () => {
   return (
     <AuthForm
       validator={z.object({
-        email: z
-          .string({ message: "We need an email to continue" })
-          .email({ message: "That email doesn't look quite right" }),
+        email,
       })}
       inputs={{
         email: {
