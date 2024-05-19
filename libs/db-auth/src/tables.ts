@@ -16,7 +16,7 @@ import { userId } from "./schemas";
 export const usersTable = pgTable(
   "users",
   {
-    id: id().primaryKey(),
+    id: id().primaryKey().unique().default(crypto.randomUUID()),
     name: varchar("name", { length: 50 }),
     email: varchar("email", { length: 255 }).notNull(),
     emailVerified: timestamp("email_verified", { mode: "date" }),

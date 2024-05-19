@@ -7,7 +7,7 @@ import { cn } from "../utils/cn";
 import { Spinner } from "./Spinner";
 
 export const variants = cva(
-  "relative inline-flex items-center justify-center gap-x-1 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+  "relative inline-flex items-center justify-center gap-x-1 overflow-hidden whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
@@ -57,7 +57,7 @@ export const Button = forwardRef<
     >
       {isLoading && (
         <div className="absolute left-0 top-0 flex h-full w-full items-center justify-center bg-inherit">
-          <Spinner className="size-4" />
+          <Spinner className="size-5" />
         </div>
       )}
       {children}

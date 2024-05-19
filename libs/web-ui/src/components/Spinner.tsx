@@ -10,7 +10,7 @@ export const Spinner = forwardRef<
   return (
     <Loader2Icon
       ref={ref}
-      className={cn("animate-spin opacity-50", className)}
+      className={cn("animate-spin", className)}
       {...props}
     />
   );

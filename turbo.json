@@ -40,5 +40,13 @@
       "cache": false
     }
   },
-  "globalEnv": ["DB_TODOS_URL", "DB_AUTH_URL"]
+  "globalEnv": [
+    "DB_TODOS_URL",
+    "DB_AUTH_URL",
+    "AUTH_SECRET",
+    "EMAIL_SERVER_HOST",
+    "EMAIL_SERVER_PORT",
+    "EMAIL_SERVER_USER",
+    "EMAIL_SERVER_PASSWORD"
+  ]
 }

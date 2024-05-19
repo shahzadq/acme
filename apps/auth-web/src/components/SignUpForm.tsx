@@ -1,103 +1,65 @@
 "use client";
 
-import Link from "next/link";
+import { useState } from "react";
 import { z } from "zod";
 
-import { Button } from "@workspace/web-ui/components/Button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  useForm,
-  zodResolver,
-} from "@workspace/web-ui/components/Form";
-import { TriangleAlertIcon } from "@workspace/web-ui/components/Icons";
-import { Input } from "@workspace/web-ui/components/Input";
-import { cn } from "@workspace/web-ui/utils/cn";
+import { MailSearchIcon } from "@workspace/web-ui/components/Icons";
+
+import { signUp } from "@/actions/auth";
+import { AuthForm } from "./AuthForm";
 
 export const SignUpForm = () => {
-  const form = useForm({
-    resolver: zodResolver(
-      z.object({
-        name: z.string().min(2).max(50),
-        email: z.string().email(),
-      }),
-    ),
-    defaultValues: {
-      name: "",
-      email: "",
-    },
-  });
+  const [successMessage, setSuccessMessage] = useState<{
+    email: string;
+    name: string;
+  }>();
 
-  const handleFormSubmit = form.handleSubmit(async (values) => {});
+  if (typeof successMessage !== "undefined")
+    return (
+      <div className="flex flex-col items-center justify-center gap-y-4 rounded-lg bg-blue-100 p-8 text-center text-sm text-black">
+        <MailSearchIcon className="text-blue-500" />
+        <div className="flex flex-col gap-y-1">
+          <b className="text-blue-500">Hi {successMessage.name}.</b>
+          <span>
+            We've sent a link to{" "}
+            <b className="text-blue-500">{successMessage.email}</b>. Click it to
+            continue.
+          </span>
+        </div>
+        <span className="w-3/4 text-xs opacity-75">
+          Remember to check your spam folder. You can close this page now.
+        </span>
+      </div>
+    );
 
   return (
-    <Form {...form}>
-      <form
-        onSubmit={handleFormSubmit}
-        className="flex w-full flex-col gap-y-6"
-      >
-        <FormField
-          control={form.control}
-          name="name"
-          render={({ field, fieldState }) => (
-            <FormItem>
-              <FormControl>
-                <Input
-                  type="text"
-                  placeholder="Name"
-                  className={cn(
-                    fieldState.error &&
-                      "border-red-500 focus-visible:ring-red-500",
-                  )}
-                  {...field}
-                />
-              </FormControl>
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field, fieldState }) => (
-            <FormItem>
-              <FormControl>
-                <Input
-                  type="email"
-                  placeholder="Email Address"
-                  className={cn(
-                    fieldState.error &&
-                      "border-red-500 focus-visible:ring-red-500",
-                  )}
-                  {...field}
-                />
-              </FormControl>
-            </FormItem>
-          )}
-        />
-        {(form.formState.errors.email ??
-          form.formState.errors.name ??
-          form.formState.errors.root) && (
-          <div className="flex flex-row items-center gap-x-2 text-sm text-red-500">
-            <TriangleAlertIcon className="size-4" />
-            {form.formState.errors.email?.message ??
-              form.formState.errors.name?.message ??
-              form.formState.errors.root?.message}
-          </div>
-        )}
-        <div className="flex flex-col gap-y-4">
-          <Button type="submit" isLoading={form.formState.isLoading}>
-            Next
-          </Button>
-          <Link
-            href="/signin"
-            className="text-center text-sm font-medium text-blue-500"
-          >
-            Sign In
-          </Link>
-        </div>
-      </form>
-    </Form>
+    <AuthForm
+      validator={z.object({
+        name: z
+          .string()
+          .min(2, { message: "Name should be at least 2 characters long" })
+          .max(50, { message: "Name can't exceed 50 characters" }),
+        email: z
+          .string()
+          .email({ message: "That email doesn't look quite right" }),
+      })}
+      inputs={{
+        name: { type: "text", placeholder: "Name", errorCategory: "Name" },
+        email: {
+          type: "email",
+          placeholder: "Email Address",
+          errorCategory: "Email Address",
+        },
+      }}
+      onSubmit={async (values, { setError }) => {
+        const result = await signUp(values);
+
+        if (result.type === "Error") {
+          if (result.message === "Email already registered") {
+            setError(result.message, "email");
+          } else setError(result.message);
+        } else setSuccessMessage(values);
+      }}
+    />
   );
 };
