@@ -18,6 +18,7 @@ import { Input } from "@workspace/web-ui/components/Input";
 import { cn } from "@workspace/web-ui/utils/cn";
 
 import { mapKeys } from "@/utils/objects";
+import { isDefined } from "@/utils/typeguards";
 
 export const AuthForm = <
   S extends z.ZodRawShape,
@@ -32,9 +33,7 @@ export const AuthForm = <
   inputs: Record<
     StringKeyOf<I>,
     React.ComponentProps<typeof Input> &
-      Required<
-        Pick<React.ComponentProps<typeof Input>, "placeholder" | "type">
-      > & { errorCategory: string }
+      Required<Pick<React.ComponentProps<typeof Input>, "placeholder" | "type">>
   >;
   onSubmit: (
     values: I,
@@ -49,21 +48,9 @@ export const AuthForm = <
 
   const errors = useMemo(
     () =>
-      mapKeys(form.formState.errors, (key, value) => {
-        if (key === "root")
-          return { field: undefined, error: value?.message ?? undefined };
-
-        if (typeof value?.message !== "undefined")
-          return {
-            field: inputs[key as keyof typeof inputs].errorCategory,
-            error: value.message.toString(),
-          };
-
-        return { field: key, error: undefined };
-      }).filter((i) => typeof i.error !== "undefined") as {
-        field: string;
-        error: string;
-      }[],
+      mapKeys(form.formState.errors, (_, value) =>
+        typeof value?.message === "string" ? value.message : undefined,
+      ).filter(isDefined),
     [form.formState],
   );
 
@@ -85,41 +72,36 @@ export const AuthForm = <
         )}
         className="flex w-full flex-col gap-y-6"
       >
-        {mapKeys(inputs, (key, { className, ...input }) => {
-          if (typeof key === "string") {
-            return (
-              <FormField
-                key={key}
-                control={form.control}
-                name={key}
-                render={({ field, fieldState }) => (
-                  <FormItem>
-                    <FormControl>
-                      <Input
-                        className={cn(
-                          fieldState.error &&
-                            "border-red-500 focus-visible:ring-red-500",
-                          className,
-                        )}
-                        {...input}
-                        {...field}
-                      />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-            );
-          }
-        })}
+        {mapKeys(inputs, (key, { className, ...input }) => (
+          <FormField
+            key={key}
+            control={form.control}
+            name={key}
+            render={({ field, fieldState }) => (
+              <FormItem>
+                <FormControl>
+                  <Input
+                    className={cn(
+                      fieldState.error &&
+                        "border-red-500 focus-visible:ring-red-500",
+                      className,
+                    )}
+                    {...input}
+                    {...field}
+                  />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+        ))}
         {errors.length > 0 && (
           <ul className="flex flex-col gap-y-2">
-            {errors.map(({ error }, i) => (
+            {errors.map((error, i) => (
               <li
                 key={i}
                 className="flex flex-row items-center gap-x-2 text-sm text-red-500"
               >
                 <TriangleAlertIcon className="size-4" />
-                {/* {typeof field !== "undefined" && <span>{field}:</span>} */}
                 <span>{error}</span>
               </li>
             ))}

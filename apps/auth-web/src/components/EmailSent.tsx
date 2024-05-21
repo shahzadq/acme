@@ -1,7 +1,7 @@
 import { MailSearchIcon } from "@workspace/web-ui/components/Icons";
 
 export const EmailSent = ({ email }: { email: string }) => (
-  <div className="flex flex-col gap-y-4 rounded-lg bg-blue-100 p-8 text-sm text-black dark:bg-blue-200">
+  <div className="flex flex-col gap-y-4 rounded-lg border border-blue-500 bg-blue-500/5 p-8 text-sm">
     <MailSearchIcon className="text-blue-500" />
     <div className="flex flex-col gap-y-1">
       <span>

@@ -22,7 +22,6 @@ export const SignInForm = () => {
         email: {
           type: "email",
           placeholder: "Email Address",
-          errorCategory: "Email Address",
         },
       }}
       onSubmit={(values) => {

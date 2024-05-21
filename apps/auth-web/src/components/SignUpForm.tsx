@@ -21,7 +21,7 @@ export const SignUpForm = () => {
     <AuthForm
       validator={z.object({
         name: z
-          .string()
+          .string({ message: "Invalid Name" })
           .min(2, { message: "Name should be at least 2 characters long" })
           .max(50, { message: "Name can't exceed 50 characters" })
           .optional(),
@@ -31,12 +31,10 @@ export const SignUpForm = () => {
         name: {
           type: "text",
           placeholder: "Name (optional)",
-          errorCategory: "Name",
         },
         email: {
           type: "email",
           placeholder: "Email Address",
-          errorCategory: "Email Address",
         },
       }}
       onSubmit={async (values, { setError }) => {

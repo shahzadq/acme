@@ -3,9 +3,10 @@ import type { Metadata } from "next";
 import { AuthFormHeading } from "@/components/AuthFormHeading";
 import { AuthFormLink } from "@/components/AuthFormLink";
 import { SignInForm } from "@/components/SignInForm";
+import { constructPageTitle } from "@/helpers/metadata";
 
 export const metadata: Metadata = {
-  title: "Sign In - acme",
+  title: constructPageTitle("Sign In"),
 };
 
 export default function SignInPage() {
