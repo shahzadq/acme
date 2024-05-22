@@ -17,18 +17,18 @@
     "with-env": "dotenv -e ../../.env --"
   },
   "dependencies": {
-    "@workspace/drizzle": "workspace:*",
     "@t3-oss/env-core": "^0.10.1",
+    "@workspace/drizzle": "workspace:*",
     "drizzle-orm": "^0.30.10",
     "postgres": "^3.4.4",
-    "zod": "^3.23.5"
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@workspace/eslint-config": "workspace:*",
     "@workspace/prettier-config": "workspace:*",
     "@workspace/tsconfig": "workspace:*",
-    "drizzle-kit": "^0.20.17",
-    "eslint": "^9.0.0",
+    "drizzle-kit": "^0.20.18",
+    "eslint": "^9.3.0",
     "pg": "^8.11.5",
     "prettier": "^3.2.5",
     "typescript": "^5.4.5"

@@ -15,13 +15,13 @@
   },
   "dependencies": {
     "drizzle-orm": "^0.30.10",
-    "zod": "^3.23.5"
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@workspace/eslint-config": "workspace:*",
     "@workspace/prettier-config": "workspace:*",
     "@workspace/tsconfig": "workspace:*",
-    "eslint": "^9.0.0",
+    "eslint": "^9.3.0",
     "prettier": "^3.2.5",
     "typescript": "^5.4.5"
   },

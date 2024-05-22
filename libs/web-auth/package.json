@@ -5,8 +5,8 @@
   "type": "module",
   "exports": {
     ".": {
-      "default": "./src/index.ts",
-      "react-server": "./src/index.rsc.ts"
+      "react-server": "./src/index.rsc.ts",
+      "default": "./src/index.ts"
     },
     "./env": "./env.ts"
   },
@@ -28,16 +28,16 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-email": "2.1.2",
-    "zod": "^3.23.5"
+    "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@types/react": "^18.3.1",
     "@types/nodemailer": "^6.4.15",
+    "@types/react": "^18.3.2",
     "@workspace/eslint-config": "workspace:*",
     "@workspace/prettier-config": "workspace:*",
     "@workspace/tailwind-config": "workspace:*",
     "@workspace/tsconfig": "workspace:*",
-    "eslint": "^9.0.0",
+    "eslint": "^9.3.0",
     "prettier": "^3.2.5",
     "typescript": "^5.4.5"
   },

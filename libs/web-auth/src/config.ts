@@ -1,5 +1,4 @@
 import type { DefaultSession, NextAuthConfig } from "next-auth";
-import type { Adapter } from "next-auth/adapters";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import { render } from "@react-email/render";
 import Nodemailer from "next-auth/providers/nodemailer";
@@ -30,7 +29,7 @@ export const authConfig = {
     accountsTable,
     sessionsTable,
     verificationTokensTable,
-  }) as Adapter,
+  }),
   providers: [
     Nodemailer({
       server: {
@@ -45,17 +44,15 @@ export const authConfig = {
       sendVerificationRequest: async ({ url, provider, identifier }) => {
         const transport = createTransport(provider.server);
 
-        const emailHtml = render(SignInRequestEmail({ href: url }));
-        const emailText = render(SignInRequestEmail({ href: url }), {
-          plainText: true,
-        });
+        const renderSignInRequestEmail = (plainText = false) =>
+          render(SignInRequestEmail({ href: url }), { plainText });
 
         const result = await transport.sendMail({
           to: identifier,
           from: provider.from,
           subject: `acme Sign In request`,
-          text: emailText,
-          html: emailHtml,
+          text: renderSignInRequestEmail(true),
+          html: renderSignInRequestEmail(),
         });
 
         const failed = result.rejected.concat(result.pending).filter(Boolean);
