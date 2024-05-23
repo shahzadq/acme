@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@workspace/db-todos": "workspace:*",
+    "@workspace/utils": "workspace:*",
     "@workspace/web-ui": "workspace:*",
     "immer": "^10.1.1",
     "next": "^14.2.3",

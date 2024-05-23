@@ -1,10 +1,10 @@
 {
-  "name": "@workspace/{{ name }}",
+  "name": "@workspace/utils",
   "private": true,
   "version": "0.1.0",
   "type": "module",
   "exports": {
-    ".": "./src/index.ts"
+    "./*": "./src/*.ts"
   },
   "scripts": {
     "clean": "shx rm -rf .turbo node_modules",

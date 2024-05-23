@@ -35,6 +35,9 @@ importers:
       '@workspace/db-auth':
         specifier: workspace:*
         version: link:../../libs/db-auth
+      '@workspace/utils':
+        specifier: workspace:*
+        version: link:../../libs/utils
       '@workspace/web-auth':
         specifier: workspace:*
         version: link:../../libs/web-auth
@@ -93,6 +96,9 @@ importers:
       '@workspace/db-todos':
         specifier: workspace:*
         version: link:../../libs/db-todos
+      '@workspace/utils':
+        specifier: workspace:*
+        version: link:../../libs/utils
       '@workspace/web-ui':
         specifier: workspace:*
         version: link:../../libs/web-ui
@@ -337,6 +343,27 @@ importers:
       zod:
         specifier: ^3.23.8
         version: 3.23.8
+    devDependencies:
+      '@workspace/eslint-config':
+        specifier: workspace:*
+        version: link:../../configs/eslint
+      '@workspace/prettier-config':
+        specifier: workspace:*
+        version: link:../../configs/prettier
+      '@workspace/tsconfig':
+        specifier: workspace:*
+        version: link:../../configs/typescript
+      eslint:
+        specifier: ^9.3.0
+        version: 9.3.0
+      prettier:
+        specifier: ^3.2.5
+        version: 3.2.5
+      typescript:
+        specifier: ^5.4.5
+        version: 5.4.5
+
+  libs/utils:
     devDependencies:
       '@workspace/eslint-config':
         specifier: workspace:*

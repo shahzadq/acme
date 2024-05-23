@@ -1,13 +1,7 @@
 export const getKeys = <O extends object>(object: O) =>
-  typeof object === "object" ? (Object.keys(object) as (keyof O)[]) : [];
-
-type Callback<O extends object, R, P = unknown> = (
-  key: keyof O,
-  value: O[keyof O],
-  ...args: P[]
-) => R;
+  (typeof object === "object" ? Object.keys(object) : []) as (keyof O)[];
 
 export const mapKeys = <O extends object, R>(
   object: O,
-  callback: Callback<O, R, number>,
+  callback: (key: keyof O, value: O[keyof O], idx: number) => R,
 ) => getKeys(object).map((key, i) => callback(key, object[key], i));

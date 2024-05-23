@@ -2,6 +2,7 @@
 
 import type { LucideIcon } from "@workspace/web-ui/components/Icons";
 
+import { ActiveLink } from "@workspace/web-ui/components/ActiveLink";
 import {
   CircleSlashIcon,
   ListIcon,
@@ -9,7 +10,6 @@ import {
 } from "@workspace/web-ui/components/Icons";
 
 import { useListsNames } from "@/hooks/useListsNames";
-import { ActiveLink } from "./ActiveLink";
 import { CreateNewList } from "./CreateNewList";
 
 const ListLink = ({
