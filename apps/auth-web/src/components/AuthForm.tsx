@@ -1,9 +1,11 @@
 "use client";
 
-import type { StringKeyOf } from "@/types/generics";
+import type { RequireKeys, StringKeyOf } from "@workspace/types/objects";
 import type { z } from "zod";
 import { useMemo } from "react";
 
+import { mapKeys } from "@workspace/utils/objects";
+import { isString } from "@workspace/utils/typeguards";
 import { Button } from "@workspace/web-ui/components/Button";
 import {
   Form,
@@ -17,40 +19,36 @@ import { TriangleAlertIcon } from "@workspace/web-ui/components/Icons";
 import { Input } from "@workspace/web-ui/components/Input";
 import { cn } from "@workspace/web-ui/utils/cn";
 
-import { mapKeys } from "@/utils/objects";
-import { isDefined } from "@/utils/typeguards";
-
 export const AuthForm = <
-  S extends z.ZodRawShape,
-  V extends z.ZodObject<S>,
-  I extends z.infer<V>,
+  S extends z.ZodObject<z.ZodRawShape>,
+  I extends z.infer<S>,
+  K extends StringKeyOf<I>,
 >({
-  validator,
+  schema,
   inputs,
   onSubmit,
 }: {
-  validator: V;
+  schema: S;
   inputs: Record<
-    StringKeyOf<I>,
-    React.ComponentProps<typeof Input> &
-      Required<Pick<React.ComponentProps<typeof Input>, "placeholder" | "type">>
+    K,
+    RequireKeys<React.ComponentProps<typeof Input>, "type" | "placeholder">
   >;
   onSubmit: (
     values: I,
     options: {
-      setError: (message: string, on?: "root" | StringKeyOf<I>) => void;
+      setError: (message: string, on?: "root" | K) => void;
     },
   ) => Promise<void> | void;
 }) => {
   const form = useForm({
-    resolver: zodResolver(validator),
+    resolver: zodResolver(schema),
   });
 
   const errors = useMemo(
     () =>
-      mapKeys(form.formState.errors, (_, value) =>
-        typeof value?.message === "string" ? value.message : undefined,
-      ).filter(isDefined),
+      mapKeys(form.formState.errors, (_, value) => value?.message).filter(
+        isString,
+      ),
     [form.formState],
   );
 

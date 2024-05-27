@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { z } from "zod";
 
-import { clientSignIn } from "@workspace/web-auth";
+// import { clientSignIn } from "@workspace/web-auth";
 
 import { email } from "@/schemas/authForm";
 import { AuthForm } from "./AuthForm";
@@ -17,7 +17,7 @@ export const SignInForm = () => {
 
   return (
     <AuthForm
-      validator={z.object({
+      schema={z.object({
         email,
       })}
       inputs={{
@@ -26,17 +26,19 @@ export const SignInForm = () => {
           placeholder: "Email Address",
         },
       }}
-      onSubmit={async (values, { setError }) => {
-        const result = await clientSignIn("nodemailer", {
-          email: values.email,
-          redirect: false,
-        });
+      onSubmit={(values) => {
+        // const result = await clientSignIn("nodemailer", {
+        //   email: values.email,
+        //   redirect: false,
+        // });
 
-        if (typeof result === "undefined") setError("Something went wrong");
-        else {
-          if (typeof result.error !== "undefined") setError(result.error);
-          else if (result.ok) setSubmitted(values);
-        }
+        // if (typeof result === "undefined") setError("Something went wrong");
+        // else {
+        //   if (typeof result.error !== "undefined") setError(result.error);
+        //   else if (result.ok) setSubmitted(values);
+        // }
+
+        setSubmitted(values);
       }}
     />
   );

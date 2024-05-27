@@ -19,7 +19,7 @@ export const SignUpForm = () => {
 
   return (
     <AuthForm
-      validator={z.object({
+      schema={z.object({
         name: z
           .string({ message: "Invalid Name" })
           .min(2, { message: "Name should be at least 2 characters long" })

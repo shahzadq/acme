@@ -10,8 +10,3 @@ export const {
   signIn,
   signOut,
 } = NextAuth(authConfig);
-
-export {
-  signIn as clientSignIn,
-  signOut as clientSignOut,
-} from "next-auth/react";
