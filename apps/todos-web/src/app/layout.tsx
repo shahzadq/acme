@@ -1,4 +1,5 @@
 import { PlusIcon } from "@workspace/web-ui/components/Icons";
+import { Main } from "@workspace/web-ui/components/Layout/Main";
 import { RootLayout } from "@workspace/web-ui/components/Layout/RootLayout";
 import {
   Sidebar,
@@ -32,7 +33,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </Tooltip>
         </SidebarFooter>
       </Sidebar>
-      <main>{children}</main>
+      <Main>{children}</Main>
     </RootLayout>
   );
 }
