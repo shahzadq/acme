@@ -1,31 +1,27 @@
 "use client";
 
 import type { ComponentProps } from "react";
-import { useMemo } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { cn } from "../utils/cn";
+import { isUpperCaseMatch } from "@workspace/utils/strings";
 
 export const ActiveLink = ({
   href,
-  className,
   ...props
-}: ComponentProps<typeof Link>) => {
+}: ComponentProps<typeof Link> & {
+  href: string;
+}) => {
   const pathname = usePathname();
 
-  const isActive = useMemo(() => {
-    if (pathname.toLowerCase() === href.toString().toLowerCase()) {
-      return true;
-    }
-    return false;
+  const [isActive, setIsActive] = useState(false);
+
+  useEffect(() => {
+    if (href.startsWith("http") && typeof window !== "undefined")
+      setIsActive(isUpperCaseMatch(window.location.href, href));
+    else setIsActive(isUpperCaseMatch(pathname, href));
   }, [pathname, href]);
 
-  return (
-    <Link
-      href={href}
-      className={cn(className, isActive && "active")}
-      {...props}
-    />
-  );
+  return <Link href={href} data-active={isActive} {...props} />;
 };
