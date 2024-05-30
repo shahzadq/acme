@@ -1,5 +1,11 @@
-import { AppRootLayout } from "@workspace/web-ui/components/Layout/AppRootLayout";
+import { RootLayout } from "@workspace/web-ui/components/Layout/RootLayout";
 
 export default function Layout(props: { children: React.ReactNode }) {
-  return <AppRootLayout classNames={{ main: "flex-row" }} {...props} />;
+  return (
+    <RootLayout
+      classNames={{ main: "flex-row" }}
+      header={{ appName: "todos" }}
+      {...props}
+    />
+  );
 }

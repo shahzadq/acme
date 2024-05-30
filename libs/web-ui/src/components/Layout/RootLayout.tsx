@@ -4,6 +4,7 @@ import "../../styles/globals.css";
 
 import { cn } from "../..//utils/cn";
 import { ThemeProvider } from "../../providers/theme";
+import { TooltipProvider } from "../Tooltip";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
 
@@ -39,13 +40,15 @@ export const RootLayout = ({
           enableSystem
           {...themeProvider}
         >
-          <Header {...header} />
-          <main
-            className={cn("flex w-full flex-grow flex-col", classNames?.main)}
-          >
-            {children}
-          </main>
-          <Footer />
+          <TooltipProvider>
+            <Header {...header} />
+            <main
+              className={cn("flex w-full flex-grow flex-col", classNames?.main)}
+            >
+              {children}
+            </main>
+            <Footer />
+          </TooltipProvider>
         </ThemeProvider>
       </body>
     </html>
