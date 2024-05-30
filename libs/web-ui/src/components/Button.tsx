@@ -45,7 +45,16 @@ export const Button = forwardRef<
       isLoading?: boolean;
     }
 >(function Button(
-  { className, variant, size, isLoading, children, asChild = false, ...props },
+  {
+    className,
+    type = "button",
+    variant,
+    size,
+    isLoading,
+    children,
+    asChild = false,
+    ...props
+  },
   ref,
 ) {
   const Comp = asChild ? Slot : "button";
@@ -53,6 +62,7 @@ export const Button = forwardRef<
     <Comp
       className={cn(variants({ variant, size, className }))}
       ref={ref}
+      type={type}
       {...props}
     >
       {isLoading && (
