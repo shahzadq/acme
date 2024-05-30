@@ -49,29 +49,27 @@ export const ListMenu = () => {
   const listsNames = ["example", "text", "nonsense"];
 
   return (
-    <div className="flex w-48 flex-col justify-between">
-      <div className="flex flex-col gap-y-1">
-        <ListLink href="/" icon={ListTodoIcon}>
-          All
-        </ListLink>
-        <ListLink href="/unlisted" icon={CircleSlashIcon}>
-          Unlisted
-        </ListLink>
-        <ListCategory name="Your Lists" icon={ListIcon}>
-          {listsNames.length > 0 ? (
-            listsNames.map((name, idx) => (
-              <ListLink key={idx} href={`/${name.toLowerCase()}`}>
-                {name}
-              </ListLink>
-            ))
-          ) : (
-            <div className="w-full overflow-hidden text-sm text-foreground/25">
-              You've not created any custom lists. Create a new list by pressing
-              the '+' button below.
-            </div>
-          )}
-        </ListCategory>
-      </div>
+    <div className="flex flex-col gap-y-1">
+      <ListLink href="/" icon={ListTodoIcon}>
+        All
+      </ListLink>
+      <ListLink href="/unlisted" icon={CircleSlashIcon}>
+        Unlisted
+      </ListLink>
+      <ListCategory name="Your Lists" icon={ListIcon}>
+        {listsNames.length > 0 ? (
+          listsNames.map((name, idx) => (
+            <ListLink key={idx} href={`/${name.toLowerCase()}`}>
+              {name}
+            </ListLink>
+          ))
+        ) : (
+          <div className="w-full overflow-hidden text-sm text-foreground/25">
+            You've not created any custom lists. Create a new list by pressing
+            the '+' button below.
+          </div>
+        )}
+      </ListCategory>
     </div>
   );
 };
