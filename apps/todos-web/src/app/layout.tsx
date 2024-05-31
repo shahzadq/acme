@@ -1,3 +1,4 @@
+import { db } from "@workspace/db-todos";
 import { PlusIcon } from "@workspace/web-ui/components/Icons";
 import { Main } from "@workspace/web-ui/components/Layout/Main";
 import { RootLayout } from "@workspace/web-ui/components/Layout/RootLayout";
@@ -16,13 +17,19 @@ import {
 
 import { ListMenu } from "@/components/ListMenu";
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default async function Layout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const lists = await db.query.listTable.findMany();
+
   return (
     <RootLayout>
       <Sidebar>
         <SidebarHeader appName="todos" />
         <SidebarContent>
-          <ListMenu />
+          <ListMenu lists={lists} />
         </SidebarContent>
         <SidebarFooter>
           <Tooltip>

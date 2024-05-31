@@ -9,6 +9,7 @@ import { SidebarButton } from "./Button";
 
 export const Sidebar = ({ children }: { children: React.ReactNode }) => {
   const [isOpen, setIsOpen] = useState(true);
+  const [firstLoad, setFirstLoad] = useState(true);
 
   return (
     <div className="flex flex-col gap-y-4 px-5 py-4">
@@ -17,7 +18,10 @@ export const Sidebar = ({ children }: { children: React.ReactNode }) => {
           <TooltipTrigger asChild>
             <SidebarButton
               icon={isOpen ? PanelLeftCloseIcon : PanelLeftOpenIcon}
-              onClick={() => setIsOpen(!isOpen)}
+              onClick={() => {
+                setIsOpen(!isOpen);
+                setFirstLoad(false);
+              }}
               size="sm"
             />
           </TooltipTrigger>
@@ -28,7 +32,7 @@ export const Sidebar = ({ children }: { children: React.ReactNode }) => {
         {isOpen && (
           <motion.div
             className="h-full overflow-hidden"
-            initial={{ width: 0 }}
+            initial={firstLoad ? false : { width: 0 }}
             animate={{ width: 192 }}
             exit={{ width: 0 }}
             transition={{
@@ -38,7 +42,7 @@ export const Sidebar = ({ children }: { children: React.ReactNode }) => {
           >
             <motion.div
               className="flex h-full w-48 flex-col gap-y-4"
-              initial={{ opacity: 0, x: -200 }}
+              initial={firstLoad ? false : { opacity: 0, x: -200 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -200 }}
               transition={{

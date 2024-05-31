@@ -1,7 +1,10 @@
 "use client";
 
+import type { List } from "@workspace/db-todos/types";
 import type { LucideIcon } from "@workspace/web-ui/components/Icons";
+import { useEffect, useMemo } from "react";
 
+import { mapKeys } from "@workspace/utils/objects";
 import { ActiveLink } from "@workspace/web-ui/components/ActiveLink";
 import {
   ContextMenu,
@@ -17,6 +20,9 @@ import {
   PencilIcon,
   Trash2Icon,
 } from "@workspace/web-ui/components/Icons";
+import { Spinner } from "@workspace/web-ui/components/Spinner";
+
+import { setLists, useTodosStore } from "@/stores/todos";
 
 const ListLink = ({
   icon: Icon,
@@ -67,8 +73,17 @@ const ListCategory = ({
   </div>
 );
 
-export const ListMenu = () => {
-  const listsNames = ["example", "text", "nonsense"];
+export const ListMenu = (props: { lists: List[] }) => {
+  const lists = useTodosStore((state) => state.lists);
+
+  useEffect(() => {
+    if (typeof lists === "undefined") setLists(props.lists);
+  }, [lists]);
+
+  const listsNames = useMemo(() => {
+    if (typeof lists === "undefined") return undefined;
+    return mapKeys(lists, (name) => name);
+  }, [lists]);
 
   return (
     <div className="flex flex-col gap-y-1">
@@ -79,7 +94,9 @@ export const ListMenu = () => {
         Unlisted
       </ListLink>
       <ListCategory name="Your Lists" icon={ListIcon}>
-        {listsNames.length > 0 ? (
+        {typeof listsNames === "undefined" ? (
+          <Spinner />
+        ) : listsNames.length > 0 ? (
           listsNames.map((name, idx) => (
             <ListLink key={idx} href={`/${name.toLowerCase()}`}>
               {name}
