@@ -3,9 +3,9 @@ import { Main } from "@workspace/web-ui/components/Layout/Main";
 import { RootLayout } from "@workspace/web-ui/components/Layout/RootLayout";
 import {
   Sidebar,
+  SidebarButton,
   SidebarContent,
   SidebarFooter,
-  SidebarFooterButton,
   SidebarHeader,
 } from "@workspace/web-ui/components/Layout/Sidebar";
 import {
@@ -27,7 +27,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <SidebarFooter>
           <Tooltip>
             <TooltipTrigger asChild>
-              <SidebarFooterButton icon={PlusIcon} />
+              <SidebarButton icon={PlusIcon} />
             </TooltipTrigger>
             <TooltipContent>Create new List</TooltipContent>
           </Tooltip>
