@@ -4,9 +4,18 @@ import type { LucideIcon } from "@workspace/web-ui/components/Icons";
 
 import { ActiveLink } from "@workspace/web-ui/components/ActiveLink";
 import {
+  ContextMenu,
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuSeparator,
+  ContextMenuTrigger,
+} from "@workspace/web-ui/components/ContextMenu";
+import {
   CircleSlashIcon,
   ListIcon,
   ListTodoIcon,
+  PencilIcon,
+  Trash2Icon,
 } from "@workspace/web-ui/components/Icons";
 
 const ListLink = ({
@@ -18,13 +27,26 @@ const ListLink = ({
   children: React.ReactNode;
   icon?: LucideIcon;
 }) => (
-  <ActiveLink
-    className="flex h-8 w-full flex-row items-center gap-x-2 truncate rounded-md px-3 text-sm text-foreground/50 transition-colors hover:bg-foreground/5 hover:text-foreground/75 data-[active=true]:bg-foreground/10 data-[active=true]:text-foreground"
-    {...props}
-  >
-    {typeof Icon !== "undefined" && <Icon className="aspect-square w-4" />}
-    {children}
-  </ActiveLink>
+  <ContextMenu>
+    <ContextMenuTrigger>
+      <ActiveLink
+        className="flex h-8 w-full flex-row items-center gap-x-2 truncate rounded-md px-3 text-sm text-foreground/50 transition-colors hover:bg-foreground/5 hover:text-foreground/75 data-[active=true]:bg-foreground/10 data-[active=true]:text-foreground"
+        {...props}
+      >
+        {typeof Icon !== "undefined" && <Icon className="aspect-square w-4" />}
+        {children}
+      </ActiveLink>
+    </ContextMenuTrigger>
+    <ContextMenuContent>
+      <ContextMenuItem>
+        <PencilIcon className="mr-2 size-4" /> Rename
+      </ContextMenuItem>
+      <ContextMenuSeparator />
+      <ContextMenuItem>
+        <Trash2Icon className="mr-2 size-4" /> Delete
+      </ContextMenuItem>
+    </ContextMenuContent>
+  </ContextMenu>
 );
 
 const ListCategory = ({
