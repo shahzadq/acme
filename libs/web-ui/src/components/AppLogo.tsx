@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 import { cn } from "../utils/cn";
 import { ActiveLink } from "./ActiveLink";
 import {
@@ -26,9 +24,7 @@ export const AppLogo = ({ name }: { name?: string }) => (
         {typeof name !== "undefined" && (
           <>
             <span>/</span>
-            <Link href="/" className="text-foreground">
-              {name}
-            </Link>
+            <span className="text-foreground">{name}</span>
           </>
         )}
       </div>

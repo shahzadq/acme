@@ -26,7 +26,7 @@ export const RootLayout = ({
       <body
         className={cn(
           sans.variable,
-          "flex min-h-screen flex-row bg-background font-sans text-foreground antialiased",
+          "flex h-screen flex-row overflow-hidden bg-background font-sans text-foreground antialiased",
           className,
         )}
       >

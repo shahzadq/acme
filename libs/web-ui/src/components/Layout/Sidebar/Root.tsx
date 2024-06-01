@@ -37,7 +37,7 @@ export const Sidebar = ({ children }: { children: React.ReactNode }) => {
             exit={{ width: 0 }}
             transition={{
               type: "tween",
-              duration: 0.25,
+              duration: 0.2,
             }}
           >
             <motion.div
@@ -47,7 +47,7 @@ export const Sidebar = ({ children }: { children: React.ReactNode }) => {
               exit={{ opacity: 0, x: -200 }}
               transition={{
                 type: "tween",
-                duration: 0.2,
+                duration: 0.25,
               }}
             >
               {children}
