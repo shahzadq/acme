@@ -1,23 +1,23 @@
 "use client";
 
 import type { RequireKeys, StringKeyOf } from "@workspace/types/objects";
+import type { Input } from "@workspace/web-ui/components/Input";
 import type { z } from "zod";
-import { useMemo } from "react";
 
 import { mapKeys } from "@workspace/utils/objects";
-import { isString } from "@workspace/utils/typeguards";
 import { Button } from "@workspace/web-ui/components/Button";
 import {
   Form,
   FormControl,
+  FormErrorsList,
   FormField,
+  FormInput,
   FormItem,
   useForm,
   zodResolver,
 } from "@workspace/web-ui/components/Form";
-import { TriangleAlertIcon } from "@workspace/web-ui/components/Icons";
-import { Input } from "@workspace/web-ui/components/Input";
-import { cn } from "@workspace/web-ui/utils/cn";
+import { useExtractFormErrors } from "@workspace/web-ui/hooks/useExtractFormErrors";
+import { useIsFormLoading } from "@workspace/web-ui/hooks/useIsFormLoading";
 
 export const AuthForm = <
   S extends z.ZodObject<z.ZodRawShape>,
@@ -44,21 +44,8 @@ export const AuthForm = <
     resolver: zodResolver(schema),
   });
 
-  const errors = useMemo(
-    () =>
-      mapKeys(form.formState.errors, (_, value) => value?.message).filter(
-        isString,
-      ),
-    [form.formState],
-  );
-
-  const isLoading = useMemo(
-    () =>
-      form.formState.isLoading ||
-      form.formState.isSubmitting ||
-      form.formState.isValidating,
-    [form.formState],
-  );
+  const isLoading = useIsFormLoading(form.formState);
+  const errors = useExtractFormErrors(form.formState.errors);
 
   return (
     <Form {...form}>
@@ -70,41 +57,21 @@ export const AuthForm = <
         )}
         className="flex w-full flex-col gap-y-6"
       >
-        {mapKeys(inputs, (key, { className, ...input }) => (
+        {mapKeys(inputs, (key, input) => (
           <FormField
             key={key}
             control={form.control}
             name={key}
-            render={({ field, fieldState }) => (
+            render={(params) => (
               <FormItem>
                 <FormControl>
-                  <Input
-                    className={cn(
-                      fieldState.error &&
-                        "border-red-500 focus-visible:ring-red-500",
-                      className,
-                    )}
-                    {...input}
-                    {...field}
-                  />
+                  <FormInput {...input} {...params} />
                 </FormControl>
               </FormItem>
             )}
           />
         ))}
-        {errors.length > 0 && (
-          <ul className="flex flex-col gap-y-2">
-            {errors.map((error, i) => (
-              <li
-                key={i}
-                className="flex flex-row items-center gap-x-2 text-sm text-red-500"
-              >
-                <TriangleAlertIcon className="size-4" />
-                <span>{error}</span>
-              </li>
-            ))}
-          </ul>
-        )}
+        <FormErrorsList errors={errors} />
         <Button type="submit" isLoading={isLoading} disabled={isLoading}>
           Next
         </Button>

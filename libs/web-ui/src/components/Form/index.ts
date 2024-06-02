@@ -11,3 +11,5 @@ export * from "./Field";
 export * from "./Item";
 export * from "./Label";
 export * from "./Message";
+export * from "./ErrorsList";
+export * from "./Input";

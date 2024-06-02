@@ -1,20 +1,14 @@
 import { db } from "@workspace/db-todos";
-import { PlusIcon } from "@workspace/web-ui/components/Icons";
 import { Main } from "@workspace/web-ui/components/Layout/Main";
 import { RootLayout } from "@workspace/web-ui/components/Layout/RootLayout";
 import {
   Sidebar,
-  SidebarButton,
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
 } from "@workspace/web-ui/components/Layout/Sidebar";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@workspace/web-ui/components/Tooltip";
 
+import { CreateNewListDialog } from "@/components/CreateNewListDialog";
 import { ListMenu } from "@/components/ListMenu";
 
 export default async function Layout({
@@ -32,12 +26,7 @@ export default async function Layout({
           <ListMenu lists={lists} />
         </SidebarContent>
         <SidebarFooter>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <SidebarButton icon={PlusIcon} />
-            </TooltipTrigger>
-            <TooltipContent>Create new List</TooltipContent>
-          </Tooltip>
+          <CreateNewListDialog />
         </SidebarFooter>
       </Sidebar>
       <Main>{children}</Main>
