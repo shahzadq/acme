@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
-import { PanelLeftCloseIcon, PanelLeftOpenIcon } from "../../Icons";
+import { PanelLeftIcon } from "../../Icons";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../../Tooltip";
 import { SidebarButton } from "./Button";
 
@@ -17,7 +17,7 @@ export const Sidebar = ({ children }: { children: React.ReactNode }) => {
         <Tooltip>
           <TooltipTrigger asChild>
             <SidebarButton
-              icon={isOpen ? PanelLeftCloseIcon : PanelLeftOpenIcon}
+              icon={PanelLeftIcon}
               onClick={() => {
                 setIsOpen(!isOpen);
                 setFirstLoad(false);
@@ -47,7 +47,7 @@ export const Sidebar = ({ children }: { children: React.ReactNode }) => {
               exit={{ opacity: 0, x: -200 }}
               transition={{
                 type: "tween",
-                duration: 0.25,
+                duration: 0.2,
               }}
             >
               {children}

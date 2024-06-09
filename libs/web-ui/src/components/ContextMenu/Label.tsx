@@ -12,7 +12,7 @@ export const ContextMenuLabel = forwardRef<
   <Label
     ref={ref}
     className={cn(
-      "px-2 py-1.5 text-sm font-semibold text-foreground",
+      "px-2 py-1.5 text-xs font-semibold text-foreground",
       inset && "pl-8",
       className,
     )}

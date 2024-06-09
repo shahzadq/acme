@@ -27,3 +27,4 @@ export * from "./Separator";
 export * from "./Shortcut";
 export * from "./SubContent";
 export * from "./SubTrigger";
+export * from "./ItemIcon";
