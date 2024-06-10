@@ -32,10 +32,20 @@ export const CreateNewListForm = () => {
     name: z
       .string({ message: "Invalid name" })
       .min(2, { message: "Name should be at least 2 characters long" })
-      .max(50, { message: "Nam can't exceed 50 characters" })
-      .refine((arg) => !includes(listsNames, arg), {
-        message: "Looks like you've already got a list with that name",
-      }),
+      .max(50, { message: "Name can't exceed 50 characters" })
+      .refine((arg) => !(arg.toLowerCase() === "unlisted"), {
+        message: "You've picked a reserved name - Try something else",
+      })
+      .refine(
+        (arg) =>
+          !includes(
+            listsNames.map((name) => name.toLowerCase()),
+            arg.toLowerCase(),
+          ),
+        {
+          message: "Looks like you've already got a list with that name",
+        },
+      ),
   });
 
   const form = useForm({
