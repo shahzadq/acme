@@ -4,9 +4,8 @@ import { authConfig } from "./config";
 
 export type { Session } from "next-auth";
 
-export const {
-  handlers: { GET, POST },
-  auth,
-  signIn,
-  signOut,
-} = NextAuth(authConfig);
+const { handlers, auth: defaultAuth, signIn, signOut } = NextAuth(authConfig);
+
+const auth: ReturnType<typeof NextAuth>["auth"] = defaultAuth;
+
+export { handlers, signIn, signOut, auth };

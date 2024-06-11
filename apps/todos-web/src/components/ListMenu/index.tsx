@@ -5,7 +5,6 @@ import {
   ListIcon,
   ListTodoIcon,
 } from "@workspace/web-ui/components/Icons";
-import { Spinner } from "@workspace/web-ui/components/Spinner";
 
 import { useListsNames } from "@/hooks/useListsNames";
 import { CreateNewListForm } from "./CreateNewListForm";
@@ -24,15 +23,11 @@ export const ListMenu = () => {
         Unlisted
       </ListLink>
       <ListCategory name="Your Lists" icon={ListIcon}>
-        {typeof listsNames === "undefined" ? (
-          <Spinner />
-        ) : (
-          listsNames.map((name, idx) => (
-            <ListLink key={idx} href={`/${name.toLowerCase()}`}>
-              {name}
-            </ListLink>
-          ))
-        )}
+        {listsNames.map((name, idx) => (
+          <ListLink key={idx} href={`/${name.toLowerCase()}`}>
+            {name}
+          </ListLink>
+        ))}
         <CreateNewListForm />
       </ListCategory>
     </div>

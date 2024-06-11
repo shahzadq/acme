@@ -410,9 +410,12 @@ importers:
 
   libs/web-auth:
     dependencies:
+      '@auth/core':
+        specifier: ^0.32.0
+        version: 0.32.0(nodemailer@6.9.13)
       '@auth/drizzle-adapter':
-        specifier: ^1.1.0
-        version: 1.1.0(nodemailer@6.9.13)
+        specifier: ^1.2.0
+        version: 1.2.0(nodemailer@6.9.13)
       '@react-email/components':
         specifier: 0.0.17
         version: 0.0.17(@types/react@18.3.2)(react@18.3.1)
@@ -426,8 +429,8 @@ importers:
         specifier: ^14.2.3
         version: 14.2.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       next-auth:
-        specifier: 5.0.0-beta.18
-        version: 5.0.0-beta.18(next@14.2.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(nodemailer@6.9.13)(react@18.3.1)
+        specifier: 5.0.0-beta.19
+        version: 5.0.0-beta.19(next@14.2.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(nodemailer@6.9.13)(react@18.3.1)
       nodemailer:
         specifier: ^6.9.13
         version: 6.9.13
@@ -573,8 +576,8 @@ packages:
     resolution: {integrity: sha512-30iZtAPgz+LTIYoeivqYo853f02jBYSd5uGnGpkFV0M3xOt9aN73erkgYAmZU43x4VfqcnLxW9Kpg3R5LC4YYw==}
     engines: {node: '>=6.0.0'}
 
-  '@auth/core@0.31.0':
-    resolution: {integrity: sha512-UKk3psvA1cRbk4/c9CkpWB8mdWrkKvzw0DmEYRsWolUQytQ2cRqx+hYuV6ZCsngw/xbj9hpmkZmAZEyq2g4fMg==}
+  '@auth/core@0.32.0':
+    resolution: {integrity: sha512-3+ssTScBd+1fd0/fscAyQN1tSygXzuhysuVVzB942ggU4mdfiTbv36P0ccVnExKWYJKvu3E2r3/zxXCCAmTOrg==}
     peerDependencies:
       '@simplewebauthn/browser': ^9.0.1
       '@simplewebauthn/server': ^9.0.2
@@ -587,8 +590,8 @@ packages:
       nodemailer:
         optional: true
 
-  '@auth/drizzle-adapter@1.1.0':
-    resolution: {integrity: sha512-ZC83ne3Ulkxh2II2T5qazgrqc1AmWbbPzs3oR+C93DMlIV8DPIgEaw4cmbV/kesO9xO+Gt7HpkctmOa2B26A1Q==}
+  '@auth/drizzle-adapter@1.2.0':
+    resolution: {integrity: sha512-95LHWlgtR4rQeHy4bACiVgTZdWkkEpVXYJim1IqbF1Hy0MnnMalmfGuIlNcOi64+6iC17j5FkDsMchqGwvj2Dg==}
 
   '@babel/code-frame@7.24.2':
     resolution: {integrity: sha512-y5+tLQyV8pg3fsiln67BVLD1P13Eg4lh5RW9mF0zUuvLrv9uIQ4MCL+CRT+FTsBlBjcIan6PGsLcBN0m3ClUyQ==}
@@ -3853,14 +3856,14 @@ packages:
     resolution: {integrity: sha512-dBpDMdxv9Irdq66304OLfEmQ9tbNRFnFTuZiLo+bD+r332bBmMJ8GBLXklIXXgxd3+v9+KUnZaUR5PJMa75Gsg==}
     engines: {node: '>= 0.4.0'}
 
-  next-auth@5.0.0-beta.18:
-    resolution: {integrity: sha512-x55L8wZb8PcPGCYA3e/l9tdpd7YL3FDuhas4W8pxq3PjrWJ9OoDxNN0otK9axJamJBbBgjfzTJjVQB6hXoe0ZQ==}
+  next-auth@5.0.0-beta.19:
+    resolution: {integrity: sha512-YHu1igcAxZPh8ZB7GIM93dqgY6gcAzq66FOhQFheAdOx1raxNcApt05nNyNCSB6NegSiyJ4XOPsaNow4pfDmsg==}
     peerDependencies:
       '@simplewebauthn/browser': ^9.0.1
       '@simplewebauthn/server': ^9.0.2
-      next: ^14
+      next: ^14 || ^15.0.0-0
       nodemailer: ^6.6.5
-      react: ^18.2.0
+      react: ^18.2.0 || ^19.0.0-0
     peerDependenciesMeta:
       '@simplewebauthn/browser':
         optional: true
@@ -5064,7 +5067,7 @@ snapshots:
       '@jridgewell/gen-mapping': 0.3.5
       '@jridgewell/trace-mapping': 0.3.25
 
-  '@auth/core@0.31.0(nodemailer@6.9.13)':
+  '@auth/core@0.32.0(nodemailer@6.9.13)':
     dependencies:
       '@panva/hkdf': 1.1.1
       '@types/cookie': 0.6.0
@@ -5076,9 +5079,9 @@ snapshots:
     optionalDependencies:
       nodemailer: 6.9.13
 
-  '@auth/drizzle-adapter@1.1.0(nodemailer@6.9.13)':
+  '@auth/drizzle-adapter@1.2.0(nodemailer@6.9.13)':
     dependencies:
-      '@auth/core': 0.31.0(nodemailer@6.9.13)
+      '@auth/core': 0.32.0(nodemailer@6.9.13)
     transitivePeerDependencies:
       - '@simplewebauthn/browser'
       - '@simplewebauthn/server'
@@ -8467,9 +8470,9 @@ snapshots:
 
   netmask@2.0.2: {}
 
-  next-auth@5.0.0-beta.18(next@14.2.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(nodemailer@6.9.13)(react@18.3.1):
+  next-auth@5.0.0-beta.19(next@14.2.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(nodemailer@6.9.13)(react@18.3.1):
     dependencies:
-      '@auth/core': 0.31.0(nodemailer@6.9.13)
+      '@auth/core': 0.32.0(nodemailer@6.9.13)
       next: 14.2.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react: 18.3.1
     optionalDependencies:
